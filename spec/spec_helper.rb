@@ -1,17 +1,11 @@
 #!/usr/bin/env ruby -wKU
 
 $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
-require 'texas'
-
-Texas.texas_dir = File.join(File.dirname(__FILE__), '..')
 
 require 'rspec'
-
 require 'fileutils'
 
-def text_files(opts = {})
-  Sherlock::Collection::Files.new('**/*.txt', opts)
-end
+require 'texas'
 
 def rebuild_test_data_dir!(scenario)
   FileUtils.rm_rf test_data_dir(scenario)

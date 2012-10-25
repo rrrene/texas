@@ -4,9 +4,8 @@
 %x[mkdir -p txt]
 %x[find tex -name *.tex* | xargs wc -w > txt/`date +%Y-%m-%d`.txt]
 
-$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+# $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'texas'
 
-Texas.texas_dir = File.join(File.dirname(__FILE__), '..')
 Texas::Runner.new
