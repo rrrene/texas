@@ -1,0 +1,85 @@
+%!TEX root = master.tex
+\documentclass[a4paper,parskip=half*,12pt]{scrartcl} 
+
+%Die folgenden Zeilen sind der Übersichtlichkeit halber so gestaltet
+%Alternativ lassen sich auch mehrere Pakte zusammenfassen:
+%\usepackage{jurabib,hyperref,graphicx,setspace}
+
+\usepackage{relsize}
+
+\usepackage{amsmath,amstext,amssymb}
+
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc} 
+%Erlaubt die direkte Eingabe von bspw. Umlauten, zur Aktivierung das %-Zeichen entfernen
+
+\usepackage[paper=a4paper,left=40mm,right=10mm,top=25mm,bottom=10mm]{geometry} 
+
+\usepackage[T1]{fontenc}
+
+\usepackage[table]{xcolor}
+
+% Style von URLs im Text (wichtig für Trennung am Ende der Zeile)
+\usepackage{url,hyperref}
+\urlstyle{same}
+
+\usepackage{graphicx} 
+%Wenn Bilder eingefügt werden sollen muss da drinstehen
+
+\usepackage{setspace}
+%Wird für den Zeilenabstand benötigt
+
+% Für rotierte Tabellenheader
+\usepackage{rotating}
+
+\newcommand{\vertikal}[1]{\begin{sideways}#1\end{sideways}}
+
+%einzelne, herrenlose Zeilen (Hurenkinder und Schusterjungen) vermeiden
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+% Fußnoten nicht auf zwei Seiten verteilen
+\interfootnotelinepenalty = 10000
+
+%wie weit sollen paragraphen eingerückt werden
+\setlength{\parindent}{0em}
+
+
+%Auf die Einrückung der Fußnoten wird verzichtet
+\deffootnote{1em}{1em}{%
+\textsuperscript{\thefootnotemark\ }}
+
+\newcommand{\fbr}[0]{\\}
+
+% Projektbericht-Styled footnotes
+\setlength{\footnotesep}{\baselineskip}
+\renewcommand{\fbr}[0]{\vspace{0.5\baselineskip}\\}
+
+%Bis zu welcher Gliederungsebene soll nummeriert werden 
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\usepackage{caption}
+
+%Kopf- und Fußzeile
+\usepackage{fancyhdr}
+\pagestyle{fancy} 
+\fancyhf{} 
+\fancyhead[L]{\nouppercase{\leftmark}}%Kopfzeile links, zentriert: [C] 
+\fancyhead[R]{\thepage} %Kopfzeile rechts, links:
+
+\usepackage{color}
+\newcommand{\bad}[1]{\textcolor{red}{#1}}
+\newcommand{\citeme}[1]{\textcolor{blue}{#1}}
+
+\usepackage{needspace}
+\newcommand{\gleicheseite}[1]{
+  %\needspace{6\baselineskip}
+  #1
+}
+
+\newcommand{\tabelle}[1]{Tabelle~\ref{tab:#1}}
+\newcommand{\kapitel}[1]{Kapitel \ref{chap:#1}, S. \pageref{chap:#1}}
+\newcommand{\anhang}[1]{Anhang, S. \pageref{#1}}
+
+
