@@ -5,7 +5,7 @@ require 'erb'
 module Build
   class Base
     TEX_SOURCE_FILE = "tex/master.tex"
-    LIST_TEMPLATE_REGEX = /verzeichnis/
+    LISTING_TEMPLATES_REGEX = /verzeichnis/
     PARTIAL_TEMPLATE_REGEX = /^\_/
 
     attr_reader :config, :literatur, :track
@@ -36,8 +36,6 @@ module Build
 
       @source_dir = File.dirname( source_file )
       @build_path = File.join(tmp_path, 'build')
-
-      @texas_tex_dir = File.join(Texas.texas_dir, Texas::TEX_SUBDIR_NAME)
     end
 
     def bibliography
@@ -117,7 +115,7 @@ module Build
       end
       FileUtils.rm_r build_path
       FileUtils.cp_r source_dir, build_path
-      glob = File.join(@texas_tex_dir, '*.tex*')
+      glob = File.join(Texas.texas_dir, Texas.contents_subdir_name, '*.*')
       Dir[glob].each do |filename|
         FileUtils.cp filename, build_path
       end
@@ -131,19 +129,19 @@ module Build
     def run_all_templates
       run_templates_for_content
       add_clearly_missing_abbreviations
-      run_templates_for_lists
+      run_templates_for_listings
     end
 
     def run_templates(arr)
-      arr.each { |t| Template::Runner.new(t, self).write }
+      arr.each { |t| Template.create(t, self).write }
     end
 
     def run_templates_for_content
-      run_templates templates.select { |t| t !~ LIST_TEMPLATE_REGEX }
+      run_templates templates.select { |t| t !~ LISTING_TEMPLATES_REGEX }
     end
 
-    def run_templates_for_lists
-      run_templates templates.select { |t| t =~ LIST_TEMPLATE_REGEX }
+    def run_templates_for_listings
+      run_templates templates.select { |t| t =~ LISTING_TEMPLATES_REGEX }
     end
 
     def run_pdflatex
@@ -172,7 +170,7 @@ module Build
     end
 
     def templates
-      all = Dir[File.join(build_path, "**/*.tex.erb")]
+      all = Dir[File.join(build_path, "**/*")]
       all.select { |t| File.basename(t) !~ PARTIAL_TEMPLATE_REGEX }
     end
 

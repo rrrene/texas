@@ -105,7 +105,7 @@ module Texas
       end
 
       def find_work_dir(start_dir = Dir.pwd)
-        results = Dir[File.join(start_dir, Texas::TEX_SUBDIR_NAME)]
+        results = Dir[File.join(start_dir, Texas.contents_subdir_name)]
         if !results.empty?
           start_dir
         else
@@ -119,9 +119,9 @@ module Texas
       end
 
       def find_contents_file(file)
-        file = file.gsub("#{Texas::TEX_SUBDIR_NAME}/", "")
+        file = file.gsub("#{Texas.contents_subdir_name}/", "")
         file = file.gsub(/\.erb$/, "").gsub(/\.tex$/, "")
-        results = Dir[File.join(Texas::TEX_SUBDIR_NAME, "#{file}.*")]
+        results = Dir[File.join(Texas.contents_subdir_name, "#{file}.*")]
         if !results.empty?
           file
         else
