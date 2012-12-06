@@ -4,6 +4,7 @@ module Sources
 
     def initialize(hash)
       @bib = {}
+      hash ||= {}
       hash.map do |key, value|
         @bib[key] = Sources::Entry.new(key, value)
       end

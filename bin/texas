@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 
+require 'texas'
+
 # This counts all the source templates in tex/ subdir (NOT the compiled output)
-%x[mkdir -p txt]
-%x[find tex -name *.tex* | xargs wc -w > txt/`date +%Y-%m-%d`.txt]
+# %x[mkdir -p txt && find contents -name *.* | xargs wc -w > txt/`date +%Y-%m-%d`.txt]
 
 # $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-
-require 'texas'
 
 Texas::Runner.new

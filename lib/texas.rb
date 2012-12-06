@@ -5,7 +5,7 @@ module Texas
   end
 end
 Texas.texas_dir = File.join(File.dirname(__FILE__), '..')
-Texas.contents_subdir_name = "tex"
+Texas.contents_subdir_name = "contents"
 
 require 'pp'
 require 'option_parser'

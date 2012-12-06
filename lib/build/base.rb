@@ -4,29 +4,29 @@ require 'erb'
 
 module Build
   class Base
+    CONFIG_FILE = ".texasrc"
+    BIB_FILE = "config/literatur.yml"
     TEX_SOURCE_FILE = "tex/master.tex"
     LISTING_TEMPLATES_REGEX = /verzeichnis/
     PARTIAL_TEMPLATE_REGEX = /^\_/
+    DEFAULT_OPEN_CMD = "evince"
 
     attr_reader :config, :literatur, :track
     attr_reader :root, :tmp_path, :build_path
-    attr_reader :source_file, :source_dir, :dest_file
+    attr_reader :source_file, :contents_dir, :dest_file
     attr_reader :current_template
     attr_reader :options, :contents_template, :ran_templates
     attr_reader :left_unknown_abbrevs
 
     def initialize(_options)
       @options = _options
-      verbose { "Starting #{self.class}" }
-      verbose { "+ work_dir: #{options.work_dir}"}
-      verbose { "+ contents: #{options.contents_template}"}
 
       @root = options.work_dir
       @contents_template = options.contents_template
       @ran_templates = []
 
-      @config = read_config(:build)
-      @literatur = Sources::Collection.new(read_config(:literatur))
+      @config = read_config(CONFIG_FILE) || default_config
+      @literatur = Sources::Collection.new(read_config(BIB_FILE))
       @track = Build::Tracker.new(self)
 
       @tmp_path = File.join(root, 'tmp')
@@ -34,8 +34,16 @@ module Build
 
       @dest_file = File.join(root, "bin", "#{contents_template}.pdf")
 
-      @source_dir = File.dirname( source_file )
+      @contents_dir = options.contents_dir
       @build_path = File.join(tmp_path, 'build')
+
+      verbose { "Starting #{self.class.to_s.green}" }
+      verbose { "+ work_dir: #{options.work_dir}"}
+      verbose { "+ contents_dir: #{@contents_dir}"}
+      verbose { "+ contents_template: #{@contents_template}"}
+      verbose { "+ build_path: #{@build_path}"}
+
+      execute_before_scripts
     end
 
     def bibliography
@@ -57,13 +65,11 @@ module Build
     end
 
     def read_config(name)
-      filename = File.join(root, 'config', "#{name}.yml")
-
+      filename = File.join(root, name)
       if File.exist?(filename)
-        hash = YAML.load_file(filename) || {}
-        default_config.merge(hash)
+        default_config.merge YAML.load_file(filename)
       else
-        {}
+        nil
       end
     end
 
@@ -94,6 +100,15 @@ module Build
       verbose { "Adding known abbrevs: " + known_abbrevs.inspect } unless known_abbrevs.empty?
     end
 
+    def execute_before_scripts
+      if config['script']
+        if cmd = config['script']['before']
+          verbose { "Runnung before script:\n  #{cmd.cyan}" }
+          system cmd
+        end
+      end
+    end
+
     def find(*use_classes)
       compiled_files = Dir[File.join(build_path, "**/*.tex")]
       found = []
@@ -114,7 +129,7 @@ module Build
         # ...
       end
       FileUtils.rm_r build_path
-      FileUtils.cp_r source_dir, build_path
+      FileUtils.cp_r contents_dir, build_path
       glob = File.join(Texas.texas_dir, Texas.contents_subdir_name, '*.*')
       Dir[glob].each do |filename|
         FileUtils.cp filename, build_path
@@ -151,12 +166,20 @@ module Build
       `pdflatex #{File.basename(source_file)}`
     end
 
-    def run_open_command_if_present
-      if config["commands"]
-        if cmd = config["commands"]["open"]
-          `#{cmd} #{dest_file}`
-        end
+    def open_pdf
+      if open_pdf_cmd
+        system "#{open_pdf_cmd} #{dest_file}"
+      else
+        puts "Can't open PDF: no default command recognized. Specify in #{CONFIG_FILE}"
       end
+    end
+
+    def open_pdf_cmd
+      cmd = `which #{DEFAULT_OPEN_CMD}`.strip
+      if config["script"]
+        cmd = config["script"]["open"] || cmd
+      end
+      cmd.empty? ? nil : cmd
     end
 
     def run

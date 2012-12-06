@@ -15,6 +15,7 @@ module Texas
         options = OpenStruct.new
         options.task = :build
         options.work_dir = find_work_dir
+        options.contents_dir = Texas.contents_subdir_name
         options.contents_template = find_contents_file("contents")
         options.citation_author = nil
         options.verbose = false
@@ -87,7 +88,9 @@ module Texas
 
         opts.parse!(args)
         unless args.empty?
-          options.contents_template = find_contents_file(args.shift)
+          f = args.shift
+          options.contents_template = find_contents_file(f)
+          options.contents_dir = find_contents_dir(f)
         end
         check_mandatory! options
         options
@@ -118,14 +121,21 @@ module Texas
         end
       end
 
+      def find_contents_dir(file)
+        if Dir["#{file}*"].empty?
+          nil
+        else
+          File.dirname(file)
+        end
+      end
+
       def find_contents_file(file)
         file = file.gsub("#{Texas.contents_subdir_name}/", "")
-        file = file.gsub(/\.erb$/, "").gsub(/\.tex$/, "")
-        results = Dir[File.join(Texas.contents_subdir_name, "#{file}.*")]
-        if !results.empty?
-          file
-        else
+        glob = File.join(Texas.contents_subdir_name, "#{file}*")
+        if Dir[glob].empty?
           nil
+        else
+          file
         end
       end
     end

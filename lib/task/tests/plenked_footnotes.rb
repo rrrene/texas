@@ -15,7 +15,7 @@ module Task
       end
 
       def plenked_footnotes
-        @plenked_footnotes ||= `grep -iR "\. <%= f" tex/`
+        @plenked_footnotes ||= `grep -iR "\. <%= f" #{Texas.contents_subdir_name}/`
       end
 
       def filenames_and_excerpts

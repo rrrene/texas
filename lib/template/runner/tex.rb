@@ -8,4 +8,4 @@ class Template::Runner::TeX < Template::Runner::Base
   end
 end
 
-Template.handlers[/tex.erb$/] = Template::Runner::TeX
+Template.handlers[/tex(.erb)?$/] = Template::Runner::TeX

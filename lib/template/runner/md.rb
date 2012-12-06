@@ -6,11 +6,15 @@ class Template::Runner::Markdown < Template::Runner::Base
   end
 
   def after_write
-    tex_filename = @output_filename.gsub(/\.md$/, '.tex')
+    if `which pandoc`.empty?
+      puts "\nAborting build: pandoc not found in PATH"
+      exit
+    end
+    tex_filename = @output_filename + ".tex"
     `pandoc -S #{@output_filename} -o #{tex_filename}`
   end
 end
 
-Template.handlers[/md$/] = Template::Runner::Markdown
+Template.handlers[/md(.erb)?$/] = Template::Runner::Markdown
 
 
