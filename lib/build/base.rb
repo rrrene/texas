@@ -129,10 +129,14 @@ module Build
         # ...
       end
       FileUtils.rm_r build_path
+      File.join(Texas.texas_dir, Texas.contents_subdir_name)
       FileUtils.cp_r contents_dir, build_path
       glob = File.join(Texas.texas_dir, Texas.contents_subdir_name, '*.*')
       Dir[glob].each do |filename|
-        FileUtils.cp filename, build_path
+        dest = File.join(build_path, File.basename(filename))
+        unless File.exists?(dest)
+          FileUtils.cp filename, build_path
+        end
       end
     end
 
