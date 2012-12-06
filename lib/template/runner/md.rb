@@ -1,7 +1,9 @@
+require 'template/helper/md'
+
 class Template::Runner::Markdown < Template::Runner::Base
+  include Template::Helper::Markdown
 
   def postprocess(output)
-
     output.gsub(/^%(.+)$/, '')
   end
 

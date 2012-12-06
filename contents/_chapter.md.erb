@@ -1,0 +1,6 @@
+# <%= o.title %>
+
+<% o.templates.each_with_index do |template, index| %>
+<%= render template %>
+<%= scene_delimiter unless index == o.templates.size - 1 %>
+<% end %>
