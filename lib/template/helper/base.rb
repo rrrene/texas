@@ -39,17 +39,6 @@ module Template
         end
       end
 
-      # Returns a path relative to the build_path and strips the TeX extension
-      #
-      # Example:
-      #   input_path("/home/rene/github/dissertation/expose/tmp/build/contents.tex.erb")
-      #   # => "contents"
-      #
-      def input_path(path)
-        filename = relative_template_path(path)
-        value = filename.gsub(/\.tex$/, '').gsub(/\.tex\.erb$/, '')
-      end
-
       def base_search_paths
         [build_path, root, tmp_path]
       end
@@ -69,12 +58,22 @@ module Template
       # Returns a path relative to the build_path
       #
       # Example:
-      #   relative_template_path("/home/rene/github/dissertation/expose/tmp/build/00_titelseite")
+      #   relative_template_path("/home/rene/github/sample_project/tmp/build/00_titelseite")
       #   # => "00_titelseite"
       #
-      def relative_template_path(path, possible_exts = template_extensions, base_path = build_path)
+      def relative_template_filename(path, possible_exts = template_extensions, base_path = build_path)
         filename = file!(path, possible_exts, input_search_paths)
         filename.gsub(base_path+'/', '')
+      end
+
+      # Returns a path relative to the build_path and strips the template extension
+      #
+      # Example:
+      #   input_path("/home/rene/github/sample_project/tmp/build/contents.tex.erb")
+      #   # => "contents"
+      #
+      def relative_template_basename(path)
+        Template.basename relative_template_filename(path)
       end
 
       def render(name, locals = {})
@@ -82,8 +81,9 @@ module Template
         Template.create(template_file, build).render_to_string(locals)
       end
 
+      # Returns all extensions the Template::Runner can handle.
       def template_extensions
-        %w(md md.erb tex tex.erb)
+        Template.known_extensions
       end
 
     end

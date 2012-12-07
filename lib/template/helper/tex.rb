@@ -66,16 +66,16 @@ module Template
       def h3(*args); tex(:subsubsection, *args); end
       def h4(text); '\paragraph{'+text+'} ~\\'; end
 
-      def input(*path)
-        tex :input, input_path(path)
-      end
-
       def i(text)
         tex :emph, text
       end
 
+      def input(*path)
+        tex :input, relative_template_basename(path)
+      end
+
       def input!(*path)
-        tex :include, input_path(path)
+        tex :include, relative_template_basename(path)
       end
 
       def internet_verweis(url)

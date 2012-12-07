@@ -7,6 +7,10 @@ require 'fileutils'
 
 require 'texas'
 
+def default_options
+  {:open_pdf => false, :warnings => false}
+end
+
 def rebuild_test_data_dir!(scenario)
   FileUtils.rm_rf test_data_dir(scenario)
   FileUtils.mkdir_p test_data_dir(scenario)
@@ -34,6 +38,7 @@ def use_scenario(scenario)
 end
 
 def run_scenario(scenario, options = {})
+  options = default_options.merge(options)
   dir = use_scenario(scenario)
   Texas::Runner.new(options)
   should_templates = Dir[File.join(dir, "tmp", "build", "*.tex.should")]

@@ -37,11 +37,11 @@ module Build
       @contents_dir = options.contents_dir
       @build_path = File.join(tmp_path, 'build')
 
-      verbose { "Starting #{self.class.to_s.green}" }
-      verbose { "+ work_dir: #{options.work_dir}"}
-      verbose { "+ contents_dir: #{@contents_dir}"}
-      verbose { "+ contents_template: #{@contents_template}"}
-      verbose { "+ build_path: #{@build_path}"}
+      verbose { "Starting #{self.class}" }
+      verbose { "+ work_dir: #{options.work_dir}".dark }
+      verbose { "+ contents_dir: #{@contents_dir}".dark }
+      verbose { "+ contents_template: #{@contents_template}".dark }
+      verbose { "+ build_path: #{@build_path}".dark }
 
       execute_before_scripts
     end
@@ -103,7 +103,7 @@ module Build
     def execute_before_scripts
       if config['script']
         if cmd = config['script']['before']
-          verbose { "Runnung before script:\n  #{cmd.cyan}" }
+          verbose { "\nRunning before script:\n  #{cmd.cyan}\n\n" }
           system cmd
         end
       end
@@ -152,7 +152,9 @@ module Build
     end
 
     def run_templates(arr)
+      verbose { "Rendering templates:" }
       arr.each { |t| Template.create(t, self).write }
+      verbose { "" }
     end
 
     def run_templates_for_content
@@ -198,7 +200,11 @@ module Build
 
     def templates
       all = Dir[File.join(build_path, "**/*")]
-      all.select { |t| File.basename(t) !~ PARTIAL_TEMPLATE_REGEX }
+      all.select do |t| 
+        not_directory = !File.directory?(t)
+        not_partial = File.basename(t) !~ PARTIAL_TEMPLATE_REGEX 
+        not_partial && not_directory
+      end
     end
 
     def tracked_abbrevs

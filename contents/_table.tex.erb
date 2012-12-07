@@ -1,23 +1,23 @@
 % _table.tex.erb
 
-<% align = o[:align] || ['l'] * o[:header].length %>
-<% sources = o[:source] || [] %>
+<% align = o.align || ['l'] * o.header.length %>
+<% sources = o.source || [] %>
 
 \renewcommand{\arraystretch}{2}
 \begin{table}[Ht]\footnotesize
   \rowcolors{1}{gray!10}{white}
   \begin{tabular}{ | <%= align.join('|') %> | }
     \hline
-    <% if o[:header] %>
-      <%= tr *o[:header] %>
+    <% if o.header %>
+      <%= tr *o.header %>
       \hline
     <% end %>
-    <% o[:data].each do |row| %>
+    <% o.data.each do |row| %>
       <%= tr *row %>
       \hline
     <% end %>
   \end{tabular}
-  <%= caption o[:caption] %>
-  <%= label o[:label], :table %>
+  <%= caption o.caption %>
+  <%= label o.label, :table %>
 \end{table}
 <%= caption_footnote sources %>

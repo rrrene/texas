@@ -1,12 +1,12 @@
 % _figure.tex.erb
 
-<% sources = o[:source] || [] %>
+<% sources = o.source || [] %>
 
 \begin{figure}
   \fbox{
-    \includegraphics[width=0.965\textwidth]{<%= o[:filename] %>}
+    \includegraphics[width=0.965\textwidth]{<%= o.filename %>}
   }
-  <%= label o[:label], Sources::Reference::Figure::NAMESPACE %>
-  <%= caption o[:caption] %>
+  <%= label o.label, Sources::Reference::Figure::NAMESPACE %>
+  <%= caption o.caption %>
 \end{figure}
 <%= caption_footnote sources %>

@@ -29,7 +29,7 @@ class Template::Runner::Base
   end
 
   def render_to_string(locals = {})
-    verbose { "Rendering template #{filename.gsub(build_path, '')}" }
+    verbose { "+ #{filename.gsub(build_path, '')}".dark }
 
     build.current_template = filename
     @locals = OpenStruct.new(locals)

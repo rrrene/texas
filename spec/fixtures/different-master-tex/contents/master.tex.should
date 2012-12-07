@@ -58,3 +58,12 @@
 \fancyhead[R]{\thepage}
 
 \usepackage{color}
+
+
+\begin{document}
+
+THIS IS A DIFFERENT MASTER.TEX!
+
+\input{contents}
+
+\end{document}
