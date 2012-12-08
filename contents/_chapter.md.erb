@@ -2,7 +2,7 @@
 
 <% templates = [] %>
 
-<% templates = glob_templates(o.glob) if o.glob %>
+<% templates = templates_by_glob(o.glob) if o.glob %>
 <% templates = o.templates if o.templates %>
 
 <% templates.each_with_index do |template, index| %>

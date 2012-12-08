@@ -182,12 +182,12 @@ module Template
       # Returns a path relative to the build_path
       #
       # Example:
-      #   relative_template_path("/home/rene/github/sample_project/tmp/build/00_titelseite")
-      #   # => "00_titelseite"
+      #   input_path("/home/rene/github/sample_project/tmp/build/contents.tex.erb")
+      #   # => "contents.tex.erb"
       #
-      def relative_template_filename(path, possible_exts = Template.known_extensions, base_path = build_path)
-        filename = find_template_file!(path, possible_exts, input_search_paths)
-        filename.gsub(base_path+'/', '')
+      def relative_template_filename(path, possible_exts = Template.known_extensions)
+        filename = find_template_file!(path, possible_exts)
+        filename.gsub(build_path+'/', '')
       end
 
       # Returns a path relative to the build_path and strips the template extension
