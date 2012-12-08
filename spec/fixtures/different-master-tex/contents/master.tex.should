@@ -27,30 +27,30 @@
 \clubpenalty = 10000
 \widowpenalty = 10000
 \displaywidowpenalty = 10000
-% Don't spread footnotes over two pages
+
 \interfootnotelinepenalty = 10000
 
-% Don't indent paragraphs
+
 \setlength{\parindent}{0em}
 
 
-% Don't indent footnotes
+
 \deffootnote{1em}{1em}{%
 \textsuperscript{\thefootnotemark\ }}
 
 \newcommand{\fbr}[0]{\\}
 
-% styled footnotes
+
 \setlength{\footnotesep}{\baselineskip}
 \renewcommand{\fbr}[0]{\vspace{0.5\baselineskip}\\}
 
-% Enumerate headlines until ...
+
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 
 \usepackage{caption}
 
-% Fancy header and footer
+
 \usepackage{fancyhdr}
 \pagestyle{fancy} 
 \fancyhf{} 
