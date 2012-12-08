@@ -46,6 +46,10 @@ module Build
       execute_before_scripts
     end
 
+    def __path__
+      @build_path
+    end
+
     def bibliography
       citations = track.citations
       keys = citations.map(&:first).uniq.sort

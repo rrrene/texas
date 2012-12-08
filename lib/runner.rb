@@ -22,6 +22,8 @@ end
 
 module Texas
   class Runner
+    attr_reader :task_instance
+
     def initialize(force_options = nil)
       @options = if force_options.nil?
         Texas::OptionParser.parse(ARGV)
@@ -32,7 +34,8 @@ module Texas
       end
       Texas.verbose = @options.verbose
       Texas.warnings = @options.warnings
-      task_class.new(@options).run
+      @task_instance = task_class.new(@options)
+      @task_instance.run
     end
 
     def task_class

@@ -14,9 +14,11 @@ class Template::Runner::Base
 
   # TODO: Use Forwardable
   def root; build.root; end
-  def tmp_path; build.tmp_path; end
   def build_path; build.build_path; end
-  def contents_dir; build.contents_dir; end
+
+  def __path__
+    File.dirname filename
+  end
 
   def o
     @locals

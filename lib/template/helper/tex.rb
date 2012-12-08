@@ -39,7 +39,7 @@ module Template
       def figure(path, options = {})
         options[:caption] ||= "TODO: Caption"
         options[:label] ||= path
-        options[:filename] ||= file!([:figures, path], %w(pdf png))
+        options[:filename] ||= find_template_file!([:figures, path], %w(pdf png))
         build.track.figure(options[:label])
         partial "figure", options
       end
@@ -177,6 +177,27 @@ module Template
         else
           arr[0]
         end
+      end
+
+      # Returns a path relative to the build_path
+      #
+      # Example:
+      #   relative_template_path("/home/rene/github/sample_project/tmp/build/00_titelseite")
+      #   # => "00_titelseite"
+      #
+      def relative_template_filename(path, possible_exts = Template.known_extensions, base_path = build_path)
+        filename = find_template_file!(path, possible_exts, input_search_paths)
+        filename.gsub(base_path+'/', '')
+      end
+
+      # Returns a path relative to the build_path and strips the template extension
+      #
+      # Example:
+      #   input_path("/home/rene/github/sample_project/tmp/build/contents.tex.erb")
+      #   # => "contents"
+      #
+      def relative_template_basename(path)
+        Template.basename relative_template_filename(path)
       end
 
       def tex(command, text)

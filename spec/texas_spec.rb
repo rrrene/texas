@@ -15,5 +15,9 @@ describe Texas::Runner do
       run_scenario "different-master-tex"
     end
 
+    it "run scenario for TeX helper methods" do
+      run_scenario "helper-methods-tex"
+    end
+
   end
 end

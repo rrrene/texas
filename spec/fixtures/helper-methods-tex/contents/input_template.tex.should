@@ -1,0 +1,5 @@
+Lorem ipsum\footnote{This should be a footnote}
+
+\textbf{This should be bold}
+
+\emph{This should be italic}

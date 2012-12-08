@@ -1,0 +1,7 @@
+Should find this template relatively and render the template another_include below:
+
+This file is a static .tex file.
+
+When using the LaTeX input command, the path should be relative to master.tex e.g. some_chapter/another_include
+
+\input{some_chapter/another_include}
