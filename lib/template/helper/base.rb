@@ -39,6 +39,14 @@ module Template
         end
       end
 
+      def glob_templates(glob = "*") 
+        files = Dir[File.join(contents_dir, o.glob)]
+        templates = files.map do |f| 
+          Template.basename(f).gsub(contents_dir, '') 
+        end
+        templates.sort
+      end
+
       def base_search_paths
         [build_path, root, tmp_path]
       end
@@ -78,7 +86,7 @@ module Template
 
       def render(name, locals = {})
         template_file = file!([name], template_extensions)
-        Template.create(template_file, build).render_to_string(locals)
+        Template.create(template_file, build).__render__(locals)
       end
 
       # Returns all extensions the Template::Runner can handle.

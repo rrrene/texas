@@ -16,30 +16,34 @@ class Template::Runner::Base
   def root; build.root; end
   def tmp_path; build.tmp_path; end
   def build_path; build.build_path; end
+  def contents_dir; build.contents_dir; end
 
   def o
     @locals
   end
 
-  def after_write; end
-  def after_render(str); str; end
-
-  def run
+  def __render__(locals = {})
+    @locals = OpenStruct.new(locals)
     ERB.new(@content).result(binding)
   end
 
-  def render_to_string(locals = {})
+  def __run__(locals = {})
     verbose { "+ #{filename.gsub(build_path, '')}".dark }
 
+    old_current_template = build.current_template
     build.current_template = filename
-    @locals = OpenStruct.new(locals)
-    output = run
-    build.current_template = nil
+    output = __render__(locals)
+    build.current_template = old_current_template
     output
   end
 
+
+  def after_write; end
+  def after_render(str); str; end
+
   def write
-    output = after_render(render_to_string)
+    output = __run__
+    output = after_render(output)
     File.open(@output_filename, 'w') {|f| f.write(output) }
     after_write
   end

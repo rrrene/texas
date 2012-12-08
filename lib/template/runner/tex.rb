@@ -3,7 +3,7 @@ require 'template/helper/tex'
 class Template::Runner::TeX < Template::Runner::Base
   include Template::Helper::TeX
 
-  def postprocess(output)
+  def after_render(output)
     output.gsub(/^%(.+)$/, '')
   end
 end

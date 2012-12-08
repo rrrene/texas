@@ -1,6 +1,12 @@
 # <%= o.title %>
 
-<% o.templates.each_with_index do |template, index| %>
+<% templates = [] %>
+
+<% templates = glob_templates(o.glob) if o.glob %>
+<% templates = o.templates if o.templates %>
+
+<% templates.each_with_index do |template, index| %>
 <%= render template %>
-<%= scene_delimiter unless index == o.templates.size - 1 %>
+
+<%= scene_delimiter unless index == templates.size - 1 %>
 <% end %>

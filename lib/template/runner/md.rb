@@ -3,10 +3,6 @@ require 'template/helper/md'
 class Template::Runner::Markdown < Template::Runner::Base
   include Template::Helper::Markdown
 
-  def postprocess(output)
-    output.gsub(/^%(.+)$/, '')
-  end
-
   def after_write
     if `which pandoc`.empty?
       puts "\nAborting build: pandoc not found in PATH (required for Markdown rendering)"
