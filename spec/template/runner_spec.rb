@@ -2,14 +2,17 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Template::Runner::Base do
 
+  def test_template(_runner)
+    build = _runner.task_instance
+    template_filename = File.join(build.__path__, "contents.tex.erb")
+    Template.create( template_filename, build )
+  end
+
   describe "#__path__" do
     it "should return the absolute path of the given template" do
       run_scenario "basic" do |runner|
         build = runner.task_instance
-
-        template_filename = File.join(build.__path__, "contents.tex.erb")
-
-        template = Template.create( template_filename, build )
+        template = test_template(runner)
         template.__path__.should == build.__path__
       end
     end
@@ -20,9 +23,7 @@ describe Template::Runner::Base do
       run_scenario "basic" do |runner|
         build = runner.task_instance
         work_dir = build.root
-
-        template_filename = File.join(build.__path__, "contents.tex.erb")
-        template = Template.create( template_filename, build )
+        template = test_template(runner)
 
         found_location = template.find_template_file(["figures", "test_figure"], [:pdf, :png])
         image_file_location = File.join(work_dir, "figures", "test_figure.png")
