@@ -57,7 +57,7 @@ module Build
       collection_name = "#{key}s" # pluralize for dummies
       collection = instance_variable_get("@#{collection_name}")
       collection = [] if collection.nil?
-      collection << [@build.current_template, args]
+      collection << [@build.current_template.filename, args]
       instance_variable_set("@#{collection_name}", collection)
     end
 

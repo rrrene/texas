@@ -38,12 +38,11 @@ class Template::Runner::Base
     verbose { "+ #{filename.gsub(build_path, '')}".dark }
 
     old_current_template = build.current_template
-    build.current_template = filename
+    build.current_template = self
     output = __render__(locals)
     build.current_template = old_current_template
     output
   end
-
 
   def after_write; end
   def after_render(str); str; end

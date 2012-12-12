@@ -9,7 +9,7 @@ class Template::Runner::Markdown < Template::Runner::Base
       exit
     end
     tex_filename = Template.basename(@output_filename) + ".tex"
-    `pandoc -S #{@output_filename} -o #{tex_filename}`
+    `pandoc -S "#{@output_filename}" -o "#{tex_filename}"`
   end
 end
 

@@ -29,7 +29,7 @@ module Task
       finished_at = Time.now.to_i
       puts (finished_at - started_at).to_s + " seconds to rebuild"
     rescue Exception => e
-      puts @build.current_template
+      puts @build.current_template.filename
       puts "[ERROR] while building \n#{e}"
     end
 

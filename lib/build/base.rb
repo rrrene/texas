@@ -155,9 +155,12 @@ module Build
       run_templates_for_listings
     end
 
-    def run_templates(arr)
+    def run_templates(filenames)
       verbose { "Rendering templates:" }
-      arr.each { |t| Template.create(t, self).write }
+      filenames.each do |filename| 
+        template = Template.create(filename, self)
+        template.write
+      end
       verbose { "" }
     end
 
