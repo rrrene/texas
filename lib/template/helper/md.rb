@@ -9,6 +9,11 @@ module Template
 
       def center(str)
         "\\begin{center}#{str}\\end{center}"
+        "\\vspace{2cm}"
+      end
+
+      def page_break
+        "\\clearpage"
       end
 
       def scene_delimiter

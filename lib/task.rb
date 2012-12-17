@@ -2,7 +2,8 @@ module Task
 end
 
 require 'task/base'
-require 'task/citations'
-require 'task/stats'
-require 'task/test'
-require 'task/watch'
+
+all_rbs = Dir[ File.join( File.dirname(__FILE__), "task", "*.rb" ) ]
+all_rbs.each do |t|
+  require t
+end

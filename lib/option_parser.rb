@@ -48,6 +48,11 @@ module Texas
             options.task = :stats
           end
 
+          opts.on("--summary",
+                  "Output summaries") do |contents_template|
+            options.task = :summary
+          end
+
           opts.on("-t", "--test",
                   "Test the given template") do |contents_template|
             options.task = :test
