@@ -24,9 +24,16 @@ module Task
 
         dir = File.dirname template.filename
         if @current_dir != dir
-          rows << :separator
-          rows << [nil, nil, @current_dir_page_count.to_i, @current_dir_pages_goal]
-          rows << :separator
+          if !@current_dir.nil?
+            percent = if @current_dir_pages_goal != 0
+              (@current_dir_page_count / @current_dir_pages_goal * 100).to_i
+            else
+              "---"
+            end
+            rows << :separator
+            rows << [nil, colored_page_percent(@current_dir_page_count, @current_dir_pages_goal), @current_dir_page_count.to_i, @current_dir_pages_goal]
+            rows << :separator
+          end
 
           reset_current_dir dir
         end
@@ -44,10 +51,11 @@ module Task
         rows << [filename, word_count, colored_page_count(word_count, pages_goal.to_i), pages_goal]
 
         if template == templates.last
+            
           rows << :separator
           rows << [nil, nil, @current_dir_page_count.to_i, @current_dir_pages_goal]
           rows << :separator
-          rows << ["TOTAL", @overall_word_count, @overall_page_count.to_i, @overall_pages_goal]
+          rows << ["#{@overall_word_count} words", colored_page_percent(@overall_page_count, @overall_pages_goal), @overall_page_count.to_i, @overall_pages_goal]
         end
       end
       table = Terminal::Table.new :rows => rows, :headings => ['Template', 'Words', 'Pages', 'Goal']
@@ -64,6 +72,22 @@ module Task
         count.to_s.yellow
       else
         count.to_s.red
+      end
+    end
+
+    def colored_page_percent(page_count, pages_goal)
+      percent = if pages_goal.to_i != 0
+        (page_count / pages_goal * 100).to_i
+      else
+        0
+      end
+      str = "#{percent}%"
+      if percent >= 100
+        str.green
+      elsif percent >= 80
+        str.yellow
+      else
+        str.dark
       end
     end
 
