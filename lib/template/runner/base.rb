@@ -24,6 +24,10 @@ class Template::Runner::Base
   def __path__
     File.dirname filename
   end
+  
+  def document
+    @document ||= OpenStruct.new build.config["document"]
+  end
 
   def o
     @locals

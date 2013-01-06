@@ -3,6 +3,7 @@ require 'terminal-table'
 module Task
   class Stats < Base
     WORDS_PER_PAGE = 250
+    PERCENT_OK = 66
 
     def run
       rows = []
@@ -68,7 +69,7 @@ module Task
         count.to_s
       elsif count >= pages_goal
         count.to_s.green
-      elsif count >= pages_goal / 2
+      elsif count >= pages_goal * PERCENT_OK / 100
         count.to_s.yellow
       else
         count.to_s.red
@@ -84,7 +85,7 @@ module Task
       str = "#{percent}%"
       if percent >= 100
         str.green
-      elsif percent >= 80
+      elsif percent >= PERCENT_OK
         str.yellow
       else
         str.dark
