@@ -1,4 +1,5 @@
-\documentclass[a4paper,parskip=half*,12pt]{scrartcl} 
+
+  \documentclass[a4paper,parskip=half*,12pt]{scrartcl} 
 
 \usepackage{relsize}
 
@@ -58,6 +59,10 @@
 \fancyhead[R]{\thepage}
 
 \usepackage{color}
+
+\addtokomafont{sectioning}{\rmfamily}
+
+
 
 
 \begin{document}
