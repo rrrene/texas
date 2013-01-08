@@ -15,7 +15,7 @@ module Task
       @overall_page_count = 0
       @overall_pages_goal = 0
 
-      templates = get_sorted_array_of_templates
+      templates = build.ran_templates.uniq
 
       templates.each do |template|
         filename = shorten_filename template.filename
@@ -90,14 +90,6 @@ module Task
       else
         str.dark
       end
-    end
-
-    def get_sorted_array_of_templates
-      build.ran_templates.partition { |t| 
-        t.filename.gsub(build.__path__, '') =~ /\/.+\// 
-      }.reverse.map { |subarray|
-        subarray.sort {|x,y| x.filename <=> y.filename }
-      }.flatten
     end
 
     def reset_current_dir(dir)
