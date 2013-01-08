@@ -59,7 +59,7 @@ module Template
 
       def render(name, locals = {})
         template_file = find_template_file!([name], template_extensions)
-        Template.create(template_file, build).__render__(locals)
+        Template.create(template_file, build).__run__(locals)
       end
 
       # Returns all extensions the Template::Runner can handle.

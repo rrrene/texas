@@ -2,7 +2,8 @@ module Task
   module Tests
     class UnknownAbbrevs < Task::Test
       def run
-        if build.left_unknown_abbrevs.empty?
+        left = build.left_unknown_abbrevs
+        if !left.nil? && left.empty?
           ok "Abbreviations & acronyms"
         else
           fail "Still unknown abbrevs: #{build.left_unknown_abbrevs.inspect}" 

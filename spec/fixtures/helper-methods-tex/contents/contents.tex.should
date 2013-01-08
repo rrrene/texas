@@ -1,1 +1,7 @@
 \input{input_template}
+
+\input{some_chapter}
+
+\input{template/helper/base}
+
+\input{template/helper/info}

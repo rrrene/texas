@@ -1,5 +1,5 @@
 Texas should find the following template in a subdir with the same name as the this template
 
-(e.g. some_chapter)
+(e.g. some\_chapter)
 
 \input{some_chapter/test_include}

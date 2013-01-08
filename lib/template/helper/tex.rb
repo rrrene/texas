@@ -71,11 +71,19 @@ module Template
       end
 
       def input(*path)
+        write_template_for_input(path)
         tex :input, relative_template_basename(path)
       end
 
       def input!(*path)
+        write_template_for_input(path)
         tex :include, relative_template_basename(path)
+      end
+
+      def write_template_for_input(path)
+        filename = find_template_file!(path, template_extensions)
+        template = Template.create(filename, build)
+        template.write
       end
 
       def internet_verweis(url)

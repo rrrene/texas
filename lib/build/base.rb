@@ -6,14 +6,14 @@ module Build
   class Base
     CONFIG_FILE = ".texasrc"
     BIB_FILE = "config/literatur.yml"
-    TEX_SOURCE_FILE = "tex/master.tex"
+    MASTER_TEMPLATE = "master.tex"
     LISTING_TEMPLATES_REGEX = /verzeichnis/
     PARTIAL_TEMPLATE_REGEX = /^\_/
     DEFAULT_OPEN_CMD = "evince"
 
     attr_reader :config, :literatur, :track
     attr_reader :root, :tmp_path, :build_path
-    attr_reader :source_file, :contents_dir, :dest_file
+    attr_reader :master_file, :contents_dir, :dest_file
     attr_reader :current_template
     attr_reader :options, :contents_template, :ran_templates
     attr_reader :left_unknown_abbrevs
@@ -22,6 +22,7 @@ module Build
       @options = _options
 
       @root = options.work_dir
+      @contents_dir = options.contents_dir
       @contents_template = options.contents_template
       @ran_templates = []
 
@@ -30,12 +31,11 @@ module Build
       @track = Build::Tracker.new(self)
 
       @tmp_path = File.join(root, 'tmp')
-      @source_file = File.join(root, TEX_SOURCE_FILE)
+      @build_path = File.join(tmp_path, 'build')
+      @master_file = File.join(build_path, MASTER_TEMPLATE)
 
       @dest_file = File.join(root, "bin", "#{contents_template}.pdf")
 
-      @contents_dir = options.contents_dir
-      @build_path = File.join(tmp_path, 'build')
 
       verbose { "Starting #{self.class}" }
       verbose { "+ work_dir: #{options.work_dir}".dark }
@@ -78,7 +78,7 @@ module Build
     end
 
     def copy_build_file_to_dest_dir
-      tmp_file = File.join(build_path, "#{File.basename(source_file, '.tex')}.pdf")
+      tmp_file = File.join(build_path, "#{File.basename(master_file, '.tex')}.pdf")
       FileUtils.mkdir_p File.dirname(dest_file)
       FileUtils.copy tmp_file, dest_file
       verbose {
@@ -146,7 +146,14 @@ module Build
 
     def copy_and_run_templates
       copy_to_build_path
-      run_all_templates
+      # run_all_templates
+      run_master_template
+    end
+
+    def run_master_template
+      filename = Dir[master_file+'*'].first
+      master_template = Template.create(filename, self)
+      master_template.write
     end
 
     def run_all_templates
@@ -175,8 +182,8 @@ module Build
     def run_pdflatex
       verbose { "Running pdflatex in #{build_path} ..." }
       Dir.chdir build_path
-      `pdflatex #{File.basename(source_file)}`
-      `pdflatex #{File.basename(source_file)}`
+      `pdflatex #{File.basename(master_file)}`
+      `pdflatex #{File.basename(master_file)}`
     end
 
     def open_pdf
@@ -200,9 +207,9 @@ module Build
     end
 
     def self.run(options)
-      build = self.new(options)
-      build.run
-      build
+      instance = self.new(options)
+      instance.run
+      instance
     end
 
     def templates
