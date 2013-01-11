@@ -47,15 +47,13 @@ module Sources
       end
       errors.empty?
     end
-
-    private
-
-    def author_enumeration(et_al_limit = 3)
+    
+    def author_enumeration(join_with = "/", et_al_limit = 2)
       names = self[:authors].map { |name| name.gsub(/(\,.+)/, '') }
       if names.size > et_al_limit
         "#{names.first} et al."
       else
-        names.join('/')
+        names.join(join_with)
       end
     end
 

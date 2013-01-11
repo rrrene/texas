@@ -34,7 +34,7 @@ module Build
       @build_path = File.join(tmp_path, 'build')
       @master_file = File.join(build_path, MASTER_TEMPLATE)
 
-      @dest_file = File.join(root, "bin", "#{contents_template}.pdf")
+      @dest_file = File.join(root, "bin", "#{File.basename contents_template}.pdf")
 
 
       verbose { "Starting #{self.class}" }

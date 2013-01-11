@@ -19,7 +19,7 @@ module Sources
           pages = list
           build.track.citation(key, pages)
           build.track.miscitation(key) if pages.to_s.empty?
-          str = source.label
+          str = "\\textsc{#{source.label}}" # TODO: this is LaTeX specific
           str << ", #{enumerate pages}" unless pages.empty?
           str
         end
