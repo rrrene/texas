@@ -3,8 +3,20 @@ require 'terminal-table'
 module Task
   class Stats < Base
     WORDS_PER_PAGE = 250
-    PERCENT_OK = 66
-
+    DEFAULT_PERCENT_OK = 66
+    
+    def document
+      @document ||= OpenStruct.new build.config["document"]
+    end
+    
+    def percent_ok
+      document.stats_percent_ok || DEFAULT_PERCENT_OK
+    end
+    
+    def pages_goal_factor
+      (document.stats_pages_goal_factor || 1).to_f
+    end
+    
     def run
       rows = []
 
@@ -22,6 +34,9 @@ module Task
         content = File.read(template.filename)
         word_count = content.downcase.scan(/\w+/).size
         pages_goal = template.info.pages_goal
+        if pages_goal
+          pages_goal = (pages_goal * pages_goal_factor).ceil
+        end
 
         dir = File.dirname template.filename
         if @current_dir != dir
@@ -69,7 +84,7 @@ module Task
         count.to_s
       elsif count >= pages_goal
         count.to_s.green
-      elsif count >= pages_goal * PERCENT_OK / 100
+      elsif count >= pages_goal * percent_ok / 100
         count.to_s.yellow
       else
         count.to_s.red
@@ -85,7 +100,7 @@ module Task
       str = "#{percent}%"
       if percent >= 100
         str.green
-      elsif percent >= PERCENT_OK
+      elsif percent >= percent_ok
         str.yellow
       else
         str.dark
