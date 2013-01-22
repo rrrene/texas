@@ -28,6 +28,10 @@ module Template
       known_extensions.concat extensions
     end
 
+    def register_helper(klass)
+      Template::Runner::Base.__send__ :include, klass
+    end
+
     def create(filename, build)
       handler(filename).new(filename, build)
     end

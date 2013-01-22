@@ -34,8 +34,14 @@ module Texas
       end
       Texas.verbose = @options.verbose
       Texas.warnings = @options.warnings
+      load_local_libs
       @task_instance = task_class.new(@options)
       @task_instance.run
+    end
+
+    def load_local_libs
+      init_file = File.join(@options.work_dir, "lib", "init.rb")
+      require init_file if File.exist?(init_file)
     end
 
     def task_class

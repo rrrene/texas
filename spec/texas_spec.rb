@@ -19,5 +19,13 @@ describe Texas::Runner do
       run_scenario "helper-methods-tex"
     end
 
+    it "run scenario for .texasrc" do
+      run_scenario "texasrc"
+    end
+
+    it "run scenario for lib/ helpers" do
+      run_scenario "lib-helpers"
+    end
+
   end
 end
