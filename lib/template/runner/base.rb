@@ -39,7 +39,7 @@ class Template::Runner::Base
   end
 
   def __run__(locals = {})
-    verbose { "+ #{filename.gsub(build_path, '')}".dark }
+    verbose { "[T] #{filename.gsub(build_path, '')}".dark }
 
     old_current_template = build.current_template
     build.current_template = self

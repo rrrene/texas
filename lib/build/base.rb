@@ -7,8 +7,6 @@ module Build
     CONFIG_FILE = ".texasrc"
     BIB_FILE = "config/literatur.yml"
     MASTER_TEMPLATE = "master.tex"
-    LISTING_TEMPLATES_REGEX = /verzeichnis/
-    PARTIAL_TEMPLATE_REGEX = /^\_/
     DEFAULT_OPEN_CMD = "evince"
 
     attr_reader :config, :literatur, :track
@@ -34,14 +32,15 @@ module Build
       @build_path = File.join(tmp_path, 'build')
       @master_file = File.join(build_path, MASTER_TEMPLATE)
 
-      @dest_file = File.join(root, "bin", "#{File.basename contents_template}.pdf")
+      @dest_file = File.join(root, "bin", "#{Template.basename contents_template}.pdf")
 
 
       verbose { "Starting #{self.class}" }
-      verbose { "+ work_dir: #{options.work_dir}".dark }
-      verbose { "+ contents_dir: #{@contents_dir}".dark }
-      verbose { "+ contents_template: #{@contents_template}".dark }
-      verbose { "+ build_path: #{@build_path}".dark }
+      verbose { "[i] work_dir: #{options.work_dir}".dark }
+      verbose { "[i] contents_dir: #{@contents_dir}".dark }
+      verbose { "[i] contents_template: #{@contents_template}".dark }
+      verbose { "[i] build_path: #{@build_path}".dark }
+      verbose { "[i] dest_file: #{@dest_file}".dark }
 
       execute_before_scripts
     end
@@ -86,7 +85,7 @@ module Build
         output = `grep "Output written on" #{file}`
         numbers = output.scan(/\((\d+?) pages\, (\d+?) bytes\)\./).flatten
         @page_count = numbers.first.to_i
-        "Written PDF in #{dest_file.gsub(root, '')} (#{@page_count} pages)"
+        "Written PDF in #{dest_file.gsub(root, '')} (#{@page_count} pages)".green
       }
     end
 
@@ -107,7 +106,7 @@ module Build
     def execute_before_scripts
       if config['script']
         if cmd = config['script']['before']
-          verbose { "\nRunning before script:\n  #{cmd.cyan}\n\n" }
+          verbose { "\n[i] Running before script:\n\n    #{cmd.cyan}\n\n" }
           system cmd
         end
       end
@@ -146,37 +145,21 @@ module Build
 
     def copy_and_run_templates
       copy_to_build_path
-      # run_all_templates
       run_master_template
+      add_clearly_missing_abbreviations
+      rewrite_marked_templates
+    end
+
+    def rewrite_marked_templates
+      ran_templates.select { |t| t.marked_for_rewrite? }.each do |t|
+        t.write
+      end
     end
 
     def run_master_template
       filename = Dir[master_file+'*'].first
       master_template = Template.create(filename, self)
       master_template.write
-    end
-
-    def run_all_templates
-      run_templates_for_content
-      add_clearly_missing_abbreviations
-      run_templates_for_listings
-    end
-
-    def run_templates(filenames)
-      verbose { "Rendering templates:" }
-      filenames.each do |filename| 
-        template = Template.create(filename, self)
-        template.write
-      end
-      verbose { "" }
-    end
-
-    def run_templates_for_content
-      run_templates templates.select { |t| t !~ LISTING_TEMPLATES_REGEX }
-    end
-
-    def run_templates_for_listings
-      run_templates templates.select { |t| t =~ LISTING_TEMPLATES_REGEX }
     end
 
     def run_pdflatex
@@ -210,15 +193,6 @@ module Build
       instance = self.new(options)
       instance.run
       instance
-    end
-
-    def templates
-      all = Dir[File.join(build_path, "**/*")]
-      all.select do |t| 
-        not_directory = !File.directory?(t)
-        not_partial = File.basename(t) !~ PARTIAL_TEMPLATE_REGEX 
-        not_partial && not_directory
-      end
     end
 
     def tracked_abbrevs

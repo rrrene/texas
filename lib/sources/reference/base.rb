@@ -14,9 +14,9 @@ module Sources
         @parts = parts
       end
 
-      def enumerate(arr)
+      def enumerate(arr, connector = ", sowie ")
         if arr.size > 1
-          arr[0..-2].join(', ') + " sowie " + arr[-1]
+          arr[0..-2].join(', ') + connector + arr[-1]
         else
           arr[0]
         end

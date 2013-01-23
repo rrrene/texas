@@ -18,6 +18,10 @@ module Template
         info.summary.strip
       end
 
+      def marked_for_rewrite?
+        !!info.write_at_end_of_build
+      end
+
     end
   end
 end

@@ -27,8 +27,9 @@ module Sources
     end
 
     def label(include_year = true)
-      str = @attr['label']
-      str ||= author_enumeration
+      return @attr['label'] if @attr['label']
+
+      str = author_enumeration
       if include_year
         "#{str} (#{self[:year]})"
       else
