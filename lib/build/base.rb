@@ -67,6 +67,10 @@ module Build
       }
     end
 
+    def document_struct
+      @document_struct ||= OpenStruct.new config["document"]
+    end
+
     def read_config(name)
       filename = File.join(root, name)
       if File.exist?(filename)

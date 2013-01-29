@@ -26,7 +26,7 @@ class Template::Runner::Base
   end
   
   def document
-    @document ||= OpenStruct.new build.config["document"]
+    build.document_struct
   end
 
   def o
