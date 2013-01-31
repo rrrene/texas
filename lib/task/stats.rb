@@ -5,6 +5,10 @@ module Task
     WORDS_PER_PAGE = 250
     DEFAULT_PERCENT_OK = 66
     
+    def filter_templates(arr)
+      arr.uniq
+    end
+
     def document
       @document ||= OpenStruct.new build.config["document"]
     end
@@ -27,11 +31,11 @@ module Task
       @overall_page_count = 0
       @overall_pages_goal = 0
 
-      templates = build.ran_templates.uniq
+      templates = filter_templates(build.ran_templates)
 
       templates.each do |template|
         filename = shorten_filename template.filename
-        content = File.read(template.filename)
+        content = template.instance_variable_get("@output")
         word_count = content.downcase.scan(/\w+/).size
         pages_goal = template.info.pages_goal
         if pages_goal

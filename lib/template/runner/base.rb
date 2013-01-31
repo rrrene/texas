@@ -43,18 +43,18 @@ class Template::Runner::Base
 
     old_current_template = build.current_template
     build.current_template = self
-    output = __render__(locals)
+    @output = __render__(locals)
     build.current_template = old_current_template
-    output
+    @output
   end
 
   def after_write; end
   def after_render(str); str; end
 
   def write
-    output = __run__
-    output = after_render(output)
-    File.open(@output_filename, 'w') {|f| f.write(output) }
+    __run__
+    @output = after_render(@output)
+    File.open(@output_filename, 'w') {|f| f.write(@output) }
     after_write
   end
 end
