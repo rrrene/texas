@@ -4,7 +4,7 @@ module Build
       copy_and_run_templates
       
       if options.task == :build
-        Task::Test.new(options).run
+        Task::Test.new(options, self).run
       end
 
       run_pdflatex
