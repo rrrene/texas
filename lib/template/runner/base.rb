@@ -43,7 +43,7 @@ class Template::Runner::Base
 
     old_current_template = build.current_template
     build.current_template = self
-    @output = __render__(locals)
+    @output = after_render __render__(locals)
     build.current_template = old_current_template
     @output
   end
@@ -53,7 +53,6 @@ class Template::Runner::Base
 
   def write
     __run__
-    @output = after_render(@output)
     File.open(@output_filename, 'w') {|f| f.write(@output) }
     after_write
   end
