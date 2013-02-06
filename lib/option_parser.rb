@@ -18,6 +18,7 @@ module Texas
         options.contents_dir = Texas.contents_subdir_name
         options.contents_template = find_contents_file("contents")
         options.citation_author = nil
+        options.colors = true
         options.verbose = false
         options.warnings = true
         options.open_pdf = true
@@ -62,6 +63,11 @@ module Texas
                   "Test the given template") do |contents_template|
             options.task = :watch
             options.open_pdf = false
+          end
+
+          # Boolean switch.
+          opts.on("-c", "--[no-]color", "Switch colors") do |v|
+            options.colors = v
           end
 
           # Boolean switch.

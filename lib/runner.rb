@@ -32,11 +32,17 @@ module Texas
         force_options.each { |k, v| opts.send("#{k}=", v) }
         opts
       end
+      extend_string_class
       Texas.verbose = @options.verbose
       Texas.warnings = @options.warnings
       load_local_libs
       @task_instance = task_class.new(@options)
       @task_instance.run
+    end
+    
+    def extend_string_class
+      mod = @options.colors ? Term::ANSIColor : Term::NoColor
+      String.send :include, mod
     end
 
     def load_local_libs
