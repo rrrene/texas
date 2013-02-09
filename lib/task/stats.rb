@@ -36,7 +36,7 @@ module Task
       templates.each do |template|
         filename = shorten_filename template.filename
         content = template.instance_variable_get("@output")
-        word_count = content.downcase.scan(/\w+/).size
+        word_count = content.downcase.split(/\s+/).select { |str| str.strip != "" }.size
         pages_goal = template.info.pages_goal
         if pages_goal
           pages_goal = (pages_goal * pages_goal_factor).ceil
