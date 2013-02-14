@@ -1,3 +1,4 @@
+require 'digest/sha1'
 require 'fileutils'
 require 'yaml'
 require 'erb'
@@ -69,6 +70,13 @@ module Build
 
     def document_struct
       @document_struct ||= OpenStruct.new config["document"]
+    end
+    
+    def id
+      @id ||= begin
+        digest = Digest::SHA1.hexdigest(Time.now.to_i.to_s)
+        digest =~ /([a-f].{5})/ && $1
+      end
     end
 
     def read_config(name)

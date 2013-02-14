@@ -29,6 +29,7 @@
 \usepackage[T1]{fontenc}
 
 \usepackage[table]{xcolor}
+\usepackage{color}
 
 % Style von URLs im Text (wichtig für Trennung am Ende der Zeile)
 \usepackage{url,hyperref}
@@ -62,7 +63,7 @@
 \fancyhead[C]{<%= document.author %> -- <%= document.title %>}
 \fancyhead[R]{}
 
-\fancyfoot[L]{<%= document.status %> -- <%= Time.now.strftime("%d.%m.%Y") %>}
+\fancyfoot[L]{<%= document.status %> -- <%= Time.now.strftime("%d.%m.%Y") %> -- <%= build.id %>}
 \fancyfoot[C]{}
 \fancyfoot[R]{\thepage}
 

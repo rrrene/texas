@@ -9,7 +9,11 @@ module Template
 
       def center(str)
         "\\begin{center}#{str}\\end{center}"
-        "\\vspace{2cm}"
+#        "\\vspace{2cm}"
+      end
+
+      def gray(text)
+        "\\textcolor{gray}{#{text}}"
       end
 
       def page_break
@@ -17,7 +21,7 @@ module Template
       end
 
       def scene_delimiter
-        center "* * *"
+        center gray("* * *")
       end
 
     end

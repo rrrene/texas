@@ -34,7 +34,7 @@ module Task
       templates = filter_templates(build.ran_templates)
 
       templates.each do |template|
-        filename = shorten_filename template.filename
+        filename = label_for template
         content = template.instance_variable_get("@output")
         word_count = content.downcase.split(/\s+/).select { |str| str.strip != "" }.size
         pages_goal = template.info.pages_goal
@@ -75,7 +75,7 @@ module Task
           rows << :separator
           rows << [nil, nil, @current_dir_page_count.to_i, @current_dir_pages_goal]
           rows << :separator
-          rows << ["#{@overall_word_count} words", colored_page_percent(@overall_page_count, @overall_pages_goal), @overall_page_count.to_i, @overall_pages_goal]
+          rows << ["#{@overall_word_count} words (#{templates.size} templates)", colored_page_percent(@overall_page_count, @overall_pages_goal), @overall_page_count.to_i, @overall_pages_goal]
         end
       end
       table = Terminal::Table.new :rows => rows, :headings => ['Template', 'Words', 'Pages', 'Goal']
@@ -110,6 +110,10 @@ module Task
         str.dark
       end
     end
+    
+    def label_for(template)
+      shorten_filename template.filename
+    end
 
     def reset_current_dir(dir)
       @current_dir_word_count = 0
@@ -120,13 +124,25 @@ module Task
 
     def shorten_filename(f)
       b_full = File.basename(f)
-      arr = b_full.split('-')
+      delimiter = determine_delimiter(f)
+      arr = b_full.split(delimiter)
       if arr.size > 4
-        b_short = arr[0..2].join('-') + '-...-' + arr[-1]
+        b_short = arr[0..2].join(delimiter) + "#{delimiter}...#{delimiter}" + arr[-1]
       else
         b_short = b_full
       end
       f.gsub(build.__path__, '').gsub(b_full, b_short)
+    end
+    
+    def determine_delimiter(f)
+      delimiters = ["-", " "]
+      best_delimiter = delimiters.first
+      delimiters.each do |delimiter|
+        if f.split(delimiter).size > f.split(best_delimiter).size
+          best_delimiter = delimiter
+        end
+      end
+      best_delimiter
     end
 
   end
