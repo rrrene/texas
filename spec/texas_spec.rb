@@ -27,5 +27,9 @@ describe Texas::Runner do
       run_scenario "lib-helpers"
     end
 
+    it "run scenario for rerun" do
+      run_scenario "rerun"
+    end
+
   end
 end
