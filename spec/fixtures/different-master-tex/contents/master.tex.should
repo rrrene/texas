@@ -2,6 +2,7 @@
   \documentclass[a4paper,parskip=half*,12pt]{scrartcl} 
 
 \usepackage{relsize}
+\usepackage{enumerate}
 
 \usepackage{amsmath,amstext,amssymb}
 
@@ -13,6 +14,8 @@
 \usepackage[T1]{fontenc}
 
 \usepackage[table]{xcolor}
+
+\usepackage{ctable} 
 
 \usepackage{url,hyperref}
 \urlstyle{same}
