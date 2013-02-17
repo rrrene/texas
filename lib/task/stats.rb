@@ -39,7 +39,10 @@ module Task
         word_count = content.downcase.split(/\s+/).select { |str| str.strip != "" }.size
         pages_goal = template.info.pages_goal
         if pages_goal
-          pages_goal = (pages_goal * pages_goal_factor).ceil
+          pages_goal = (pages_goal * pages_goal_factor).round(1)
+          if pages_goal == pages_goal.to_i
+             pages_goal = pages_goal.to_i
+          end
         end
 
         dir = File.dirname template.filename
@@ -65,7 +68,9 @@ module Task
 
           @overall_word_count += word_count
           @overall_page_count += word_count / WORDS_PER_PAGE.to_f
-          @overall_pages_goal += pages_goal.to_i
+          if pages_goal
+            @overall_pages_goal += pages_goal
+          end
         end
 
         rows << [filename, word_count, colored_page_count(word_count, pages_goal.to_i), pages_goal]
@@ -75,7 +80,7 @@ module Task
           rows << :separator
           rows << [nil, nil, @current_dir_page_count.to_i, @current_dir_pages_goal]
           rows << :separator
-          rows << ["#{@overall_word_count} words (#{templates.size} templates)", colored_page_percent(@overall_page_count, @overall_pages_goal), @overall_page_count.to_i, @overall_pages_goal]
+          rows << ["#{@overall_word_count} words (#{templates.size} templates)", colored_page_percent(@overall_page_count, @overall_pages_goal), @overall_page_count.to_i, @overall_pages_goal.to_i]
         end
       end
       table = Terminal::Table.new :rows => rows, :headings => ['Template', 'Words', 'Pages', 'Goal']
