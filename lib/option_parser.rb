@@ -54,7 +54,7 @@ module Texas
             options.task = :summary
           end
 
-          opts.on("--task",
+          opts.on("--task [TASK]",
                   "Use custom task") do |task|
             options.task = task
           end
