@@ -54,6 +54,11 @@ module Texas
             options.task = :summary
           end
 
+          opts.on("--task",
+                  "Use custom task") do |task|
+            options.task = task
+          end
+
           opts.on("-t", "--test",
                   "Test the given template") do |contents_template|
             options.task = :test

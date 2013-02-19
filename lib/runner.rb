@@ -60,7 +60,12 @@ module Texas
 
     def fallback_task_class 
       class_name = @options.task.to_s.capitalize
-      eval("Task::#{class_name}")
+      begin
+        eval("Task::#{class_name}")
+      rescue
+        puts "Failed to fallback for Task::#{class_name}"
+        exit
+      end
     end
   end
 end
