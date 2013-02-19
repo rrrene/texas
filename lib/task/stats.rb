@@ -127,12 +127,12 @@ module Task
       @current_dir = dir
     end
 
-    def shorten_filename(f, parts = 5)
+    def shorten_filename(f, parts = 6)
       b_full = File.basename(f)
       delimiter = determine_delimiter(f)
       arr = b_full.split(delimiter)
       if arr.size > parts
-        b_short = arr[0..parts-2].join(delimiter) + "#{delimiter}...#{delimiter}" + arr[-1]
+        b_short = arr[0..parts-3].join(delimiter) + "#{delimiter}...#{delimiter}" + arr[-1]
       else
         b_short = b_full
       end
