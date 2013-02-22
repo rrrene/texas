@@ -63,7 +63,7 @@
 \fancyhead[C]{<%= document.author %> -- <%= document.title %>}
 \fancyhead[R]{}
 
-\fancyfoot[L]{<%= document.status %> -- <%= Time.now.strftime("%d.%m.%Y") %> -- <%= build.id %>}
+\fancyfoot[L]{<%= document.status %> -- <%= Time.now.strftime("%d.%m.%Y") %> <%= "\\textcolor{gray}{-- #{build.id}}" unless document.no_build_id %>}
 \fancyfoot[C]{}
 \fancyfoot[R]{\thepage}
 
