@@ -73,7 +73,7 @@ module Task
           end
         end
 
-        rows << [filename, word_count, colored_page_count(word_count, pages_goal.to_i), pages_goal]
+        rows << [filename, word_count, colored_page_count(word_count, pages_goal), pages_goal]
 
         if template == templates.last
             
@@ -88,12 +88,13 @@ module Task
     end
 
     def colored_page_count(word_count, pages_goal)
-      count = word_count / WORDS_PER_PAGE
-      if pages_goal == 0
+      count = (word_count.to_f / WORDS_PER_PAGE).round(1)
+      count = count.to_i if pages_goal.is_a?(Fixnum)
+      if pages_goal.to_f == 0
         count.to_s
-      elsif count >= pages_goal
+      elsif count >= pages_goal.to_f
         count.to_s.green
-      elsif count >= pages_goal * percent_ok / 100
+      elsif count >= pages_goal.to_f * percent_ok / 100
         count.to_s.yellow
       else
         count.to_s.red
