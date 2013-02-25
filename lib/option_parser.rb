@@ -19,6 +19,7 @@ module Texas
         options.contents_template = find_contents_file("contents")
         options.citation_author = nil
         options.colors = true
+        options.merge_config = nil
         options.verbose = false
         options.warnings = true
         options.open_pdf = true
@@ -57,6 +58,11 @@ module Texas
           opts.on("--task [TASK]",
                   "Use custom task") do |task|
             options.task = task
+          end
+
+          opts.on("-m", "--merge-config [CONFIG]",
+                  "Merge document config with custom key from .texasrc") do |key|
+            options.merge_config = key
           end
 
           opts.on("-t", "--test",
