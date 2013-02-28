@@ -45,18 +45,15 @@ module Texas
             options.task = :dry
           end
 
-          opts.on("-s", "--stats",
-                  "Output stats") do |contents_template|
+          opts.on("-s", "--stats", "Output stats") do |contents_template|
             options.task = :stats
           end
 
-          opts.on("--summary",
-                  "Output summaries") do |contents_template|
+          opts.on("--summary", "Output summaries") do |contents_template|
             options.task = :summary
           end
 
-          opts.on("--task [TASK]",
-                  "Use custom task") do |task|
+          opts.on("-t", "--task [TASK]", "Use custom task") do |task|
             options.task = task
           end
 
@@ -65,13 +62,11 @@ module Texas
             options.merge_config = key
           end
 
-          opts.on("-t", "--test",
-                  "Test the given template") do |contents_template|
+          opts.on("--test", "Test the given template") do |contents_template|
             options.task = :test
           end
 
-          opts.on("--watch",
-                  "Test the given template") do |contents_template|
+          opts.on("--watch", "Watch the given template") do |contents_template|
             options.task = :watch
             options.open_pdf = false
           end
