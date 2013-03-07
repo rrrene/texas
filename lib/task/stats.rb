@@ -79,7 +79,7 @@ module Task
           rows << :separator
           rows << current_dir_row
           rows << :separator
-          rows << ["#{@overall_word_count} words (#{templates.size} templates)", colored_page_percent(@overall_page_count, @overall_pages_goal), @overall_page_count.to_i, @overall_pages_goal.to_i]
+          rows << ["#{@overall_word_count}"+"/#{@overall_pages_goal.to_i * WORDS_PER_PAGE}".dark+" words (#{templates.size} templates)", colored_page_percent(@overall_page_count, @overall_pages_goal), @overall_page_count.to_i, @overall_pages_goal.to_i]
         end
       end
       table = Terminal::Table.new :rows => rows, :headings => ['Template', 'Words', 'Pages', 'Goal']
@@ -87,7 +87,7 @@ module Task
     end
     
     def current_dir_row
-      [nil, colored_page_percent(@current_dir_page_count, @current_dir_pages_goal), @current_dir_page_count.to_i, @current_dir_pages_goal]
+      ["#{@current_dir_word_count}/#{@current_dir_pages_goal.to_i * WORDS_PER_PAGE} words".dark, colored_page_percent(@current_dir_page_count, @current_dir_pages_goal), @current_dir_page_count.to_i, @current_dir_pages_goal]
     end
 
     def colored_page_count(word_count, pages_goal)
