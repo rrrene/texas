@@ -33,9 +33,13 @@ class Template::Runner::Base
     @locals
   end
 
+  def append_to_output(str)
+    @erbout << str
+  end
+
   def __render__(locals = {})
     @locals = OpenStruct.new(locals)
-    ERB.new(@content).result(binding)
+    ERB.new(@content, nil, nil, "@erbout").result(binding)
   end
 
   def __run__(locals = {})
