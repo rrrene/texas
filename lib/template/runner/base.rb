@@ -5,13 +5,13 @@ class Template::Runner::Base
   include Template::Helper::Base
   include Template::Helper::Info
 
-  attr_accessor :build, :filename
+  attr_accessor :build, :content, :filename
 
   def initialize(_filename, _build)
     self.filename = _filename
     self.build = _build
+    self.content = File.read(filename)
     @output_filename = filename.gsub(/(\.erb)$/, '')
-    @content = File.read(filename)
   end
 
   # TODO: Use Forwardable
