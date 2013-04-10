@@ -68,7 +68,7 @@ module Template
       end
 
       def templates_by_glob(glob = "*") 
-        files = Dir[File.join(__path__, o.glob)]
+        files = Dir[File.join(__path__, glob)]
         templates = files.map do |f| 
           Template.basename(f).gsub(__path__, '') 
         end

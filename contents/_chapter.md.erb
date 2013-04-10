@@ -4,10 +4,7 @@
 # <%= o.title %>
 <% end %>
 
-<% templates = [] %>
-
-<% templates = templates_by_glob(o.glob) if o.glob %>
-<% templates = o.templates if o.templates %>
+<% templates = o.templates || [] %>
 
 <% templates.each_with_index do |template, index| %>
 <%= render template %>
