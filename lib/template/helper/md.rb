@@ -14,7 +14,6 @@ module Template
 
       def center(str)
         "\\begin{center}#{str}\\end{center}"
-#        "\\vspace{2cm}"
       end
 
       def gray(text)
