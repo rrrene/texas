@@ -175,8 +175,16 @@ module Build
       end
     end
 
+    def find_master_template(possible_templates)
+      regexes = Template.handlers.keys
+      valid_master_templates = possible_templates.select do |f| 
+        regexes.any? { |regex| f =~ regex }
+      end
+      valid_master_templates.first
+    end
+
     def run_master_template
-      filename = Dir[master_file+'*'].first
+      filename = find_master_template Dir[master_file+'*']
       master_template = Template.create(filename, self)
       master_template.write
     end
