@@ -59,7 +59,7 @@
 \pagestyle{fancy} 
 \fancyhf{} 
 \fancyhead[L]{\nouppercase{\leftmark}}
-\fancyhead[R]{\thepage}
+\fancyhead[R]{ \thepage}
 
 \usepackage{color}
 
