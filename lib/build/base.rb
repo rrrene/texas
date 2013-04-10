@@ -63,6 +63,7 @@ module Build
 
     def default_config
       {
+        "document" => {},
         "abbrevs" => {},
         "false_abbrevs" => [],
       }
