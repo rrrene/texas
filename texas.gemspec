@@ -1,6 +1,3 @@
-#$:.unshift('lib')
-#require 'texas'
-
 Gem::Specification.new do |s|
   s.author = "René Föhring"
   s.email = 'rf@bamaru.de'
