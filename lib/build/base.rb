@@ -1,7 +1,5 @@
 require 'digest/sha1'
-require 'fileutils'
 require 'yaml'
-require 'erb'
 
 module Build
   class Base
@@ -61,27 +59,12 @@ module Build
       @dest_file ||= File.join(root, "bin", "#{Template.basename contents_template}.pdf")
     end
 
-    def before_tasks
-      %w(RunBeforeScripts)
-    end
-    alias __before_tasks__ before_tasks
-
-    def basic_tasks
-      %w(CopyTemplatesToBuildPath RunMasterTemplate)
-    end
-    alias __basic_tasks__ basic_tasks
-
-    def after_tasks
-      %w(RewriteMarkedTemplates)
-    end
-    alias __after_tasks__ after_tasks
-
     def run_build_tasks(*tasks)
       tasks.flatten.each { |t| run_build_task t }
     end
 
     def run_build_task(klass)
-      klass = eval("::Build::Task::#{klass}") if klass.is_a?(String)
+      klass = eval("::Build::Task::#{klass}") if [Symbol, String].include?(klass.class)
       klass.new(self).run
     end
 
@@ -89,13 +72,52 @@ module Build
       run_build_tasks before_tasks, basic_tasks, after_tasks
     end
 
-    def self.run(options)
-      instance = self.new(options)
-      instance.run
-      instance
+    %w(before basic after).each do |method|
+      class_eval <<-INSTANCE_EVAL
+        def #{method}_tasks
+          self.class.tasks(:#{method})
+        end
+      INSTANCE_EVAL
     end
 
+    class << self
+      def run(options)
+        instance = self.new(options)
+        instance.run
+        instance
+      end
+
+      def tasks(key)
+        @@tasks ||= {}
+        initialize_tasks if @@tasks[self.to_s].nil?
+        @@tasks[self.to_s][key] ||= []
+        @@tasks[self.to_s][key]
+      end
+
+      def initialize_tasks
+        @@tasks[self.to_s] = {}
+        (@@tasks[self.superclass.to_s] || {}).each do |k, v|
+          @@tasks[self.to_s][k] = v.dup
+        end
+      end
+
+      %w(before basic after).each do |method|
+        class_eval <<-CLASS_EVAL
+          def prepend_#{method}_task(*_tasks)
+            tasks(:#{method}).unshift(*_tasks)
+          end
+
+          def append_#{method}_task(*_tasks)
+            tasks(:#{method}).concat(_tasks)
+          end
+          alias #{method}_task append_#{method}_task
+        CLASS_EVAL
+      end
+
+    end
   end
+
+
 end
 
 # TODO: move the following "extension" somewhere else

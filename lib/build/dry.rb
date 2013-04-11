@@ -1,6 +1,9 @@
 module Build
   class Dry < Base
-    # just copy templates and run all templates
+    before_task :RunBeforeScripts
+
+    basic_task :CopyTemplatesToBuildPath, :RunMasterTemplate
+
+    after_task :RewriteMarkedTemplates
   end
 end
-

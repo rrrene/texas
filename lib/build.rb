@@ -3,8 +3,8 @@ end
 
 require 'build/tracker'
 require 'build/base'
-require 'build/final'
 require 'build/dry'
+require 'build/final'
 
 require 'build/task/base'
 
