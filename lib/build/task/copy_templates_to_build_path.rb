@@ -1,6 +1,6 @@
 module Build
   module Task
-    class CopyTemplates < Base
+    class CopyTemplatesToBuildPath < Base
       def run
         ensure_build_path_exists
         copy_to_build_path

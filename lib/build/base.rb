@@ -67,7 +67,7 @@ module Build
     alias __before_tasks__ before_tasks
 
     def basic_tasks
-      %w(CopyTemplates RunMasterTemplate)
+      %w(CopyTemplatesToBuildPath RunMasterTemplate)
     end
     alias __basic_tasks__ basic_tasks
 
