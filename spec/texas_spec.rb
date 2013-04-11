@@ -31,5 +31,9 @@ describe Texas::Runner do
       run_scenario "rerun"
     end
 
+    it "run scenario for prose" do
+      run_scenario "prose"
+    end
+
   end
 end
