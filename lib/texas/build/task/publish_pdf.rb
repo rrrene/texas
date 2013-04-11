@@ -16,10 +16,6 @@ module Texas
         end
 
         def run
-          if build.options.task == :build
-            ::Texas::Task::Test.new(build.options, build).run
-          end
-
           run_pdflatex
           copy_pdf_file_to_dest_dir
         end

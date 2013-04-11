@@ -121,35 +121,5 @@ module Texas
 
       end
     end
-
-
   end
-
-
-  # TODO: move the following "extension" somewhere else
-
-  module Build
-    class Base
-      # Abbreviations, bibliography and stuff ...
-
-      BIB_FILE = "config/literatur.yml"
-
-      def literatur
-        @literatur ||= Sources::Collection.new(YAML.load_file(BIB_FILE))
-      end
-
-      def track
-        @track ||= Build::Tracker.new(self)
-      end
-
-      def bibliography
-        citations = track.citations
-        keys = citations.map(&:first).uniq.sort
-        keys.map { |k| literatur[k] }
-      end
-
-    end
-  end
-
 end
-

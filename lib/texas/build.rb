@@ -3,7 +3,6 @@ module Texas
   end
 end
 
-require_relative 'build/tracker'
 require_relative 'build/base'
 require_relative 'build/dry'
 require_relative 'build/final'

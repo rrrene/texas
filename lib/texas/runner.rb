@@ -26,9 +26,9 @@ module Texas
 
     def initialize(force_options = nil)
       @options = if force_options.nil?
-        Texas::OptionParser.parse(ARGV)
+        Texas::OptionParser.new(ARGV).parse
       else
-        opts = Texas::OptionParser.parse([])
+        opts = Texas::OptionParser.new([]).parse
         force_options.each { |k, v| opts.send("#{k}=", v) }
         opts
       end
