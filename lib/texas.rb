@@ -8,13 +8,13 @@ Texas.texas_dir = File.join(File.dirname(__FILE__), '..')
 Texas.contents_subdir_name = "contents"
 
 require 'pp'
-require 'option_parser'
 
-require 'build'
-require 'core_ext'
-require 'find'
-require 'sources'
-require 'task'
-require 'template'
-require 'version'
-require 'runner'
+require 'texas/option_parser'
+require 'texas/build'
+require 'texas/core_ext'
+require 'texas/find'
+require 'texas/sources'
+require 'texas/task'
+require 'texas/template'
+require 'texas/version'
+require 'texas/runner'

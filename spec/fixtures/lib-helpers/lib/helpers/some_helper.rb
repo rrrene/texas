@@ -4,4 +4,4 @@ module SomeHelper
   end
 end
 
-Template.register_helper SomeHelper
+Texas::Template.register_helper SomeHelper

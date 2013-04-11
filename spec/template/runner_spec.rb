@@ -1,11 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Template::Runner::Base do
+describe Texas::Template::Runner::Base do
 
   def test_template(_runner)
     build = _runner.task_instance
     template_filename = File.join(build.__path__, "contents.tex.erb")
-    Template.create( template_filename, build )
+    Texas::Template.create( template_filename, build )
   end
 
   describe "#__path__" do
