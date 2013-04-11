@@ -12,6 +12,7 @@ module Build
       end
 
       def run
+        return unless build.options.open_pdf
         if open_pdf_cmd
           system "#{open_pdf_cmd} #{build.dest_file}"
         else
