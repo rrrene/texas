@@ -31,6 +31,10 @@ module Texas
       build.document_struct
     end
 
+    def store
+      build.store
+    end
+
     def o
       @locals
     end

@@ -8,8 +8,8 @@ module Texas
           if glob = opts[:glob]
             opts[:templates] = templates_by_glob(glob)
           end
-          document.__chapters__ ||= []
-          document.__chapters__ << opts
+          store.__chapters__ ||= []
+          store.__chapters__ << opts
           partial(:chapter, opts)
         end
 

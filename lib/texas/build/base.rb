@@ -29,6 +29,10 @@ module Texas
         File.join(root, 'tmp', 'build')
       end
 
+      def store
+        @store ||= OpenStruct.new
+      end
+
       def current_template=(t)
         @ran_templates ||= []
         @ran_templates << t unless t.nil?
