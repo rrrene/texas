@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary = "A tool for creating LaTex files from ERb templates."
   s.description = "A tool for creating LaTex files from ERb templates and processing them into PDF format."
 
-  s.files = Dir[ 'lib/**/*', 'spec/**/*', 'tex/**/*']
+  s.files = Dir[ 'lib/**/*', 'spec/**/*', 'bin/*', 'contents/*']
   s.require_path = 'lib'
   s.requirements << 'none'
   s.executables << 'texas'
