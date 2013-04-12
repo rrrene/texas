@@ -22,7 +22,6 @@ module Texas
 
         def copy_to_build_path
           FileUtils.rm_r build_path
-          File.join(Texas.texas_dir, Texas.contents_subdir_name)
           FileUtils.cp_r contents_dir, build_path
         end
 

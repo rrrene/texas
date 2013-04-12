@@ -20,6 +20,8 @@ module Texas
       # We set default values here.
       options.task = :build
       options.work_dir = find_work_dir
+      options.check_mandatory_arguments = true
+      options.load_local_libs = true
       options.contents_dir = Texas.contents_subdir_name
       options.contents_template = find_contents_file("contents")
       options.colors = true
@@ -48,6 +50,14 @@ module Texas
         opts.on("-m", "--merge-config [CONFIG]",
                 "Merge config with key from .texasrc") do |key|
           options.merge_config = key
+        end
+
+        opts.on("-n", "--new [NAME]",
+                "Create new texas project directory") do |name|
+          options.task = :new
+          options.check_mandatory_arguments = false
+          options.load_local_libs = false
+          options.new_project_name = name
         end
 
         opts.on("-r", "--require [LIBRARY]", "Require library before running texas") do |lib|
@@ -102,7 +112,9 @@ module Texas
         options.contents_template = find_contents_file(f)
         options.contents_dir = find_contents_dir(f)
       end
-      check_mandatory! options
+      if options.check_mandatory_arguments
+        check_mandatory! options
+      end
       options
     end
 

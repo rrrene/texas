@@ -35,7 +35,7 @@ module Texas
       extend_string_class
       Texas.verbose = @options.verbose
       Texas.warnings = @options.warnings
-      load_local_libs
+      load_local_libs if @options.load_local_libs
       @task_instance = task_class.new(@options)
       @task_instance.run
     end
