@@ -1,9 +1,9 @@
 module Texas
   module Build
     class Dry < Base
-      before_task :RunBeforeScripts
+      before_task :RunBeforeScripts, :CopyContentsToBuildPath
 
-      basic_task :CopyTemplatesToBuildPath, :RunMasterTemplate
+      basic_task :AddDefaultTemplatesToBuildPath, :RunMasterTemplate
 
       after_task :RewriteMarkedTemplates
     end

@@ -1,4 +1,3 @@
-require 'digest/sha1'
 require 'yaml'
 
 module Texas
@@ -49,10 +48,6 @@ module Texas
         end
       end
       
-      def id
-        @id ||= Digest::SHA1.hexdigest(Time.now.to_s) =~ /([a-f].{5})/ && $1
-      end
-
       def config
         @config ||= begin
           filename = File.join(root, CONFIG_FILE)

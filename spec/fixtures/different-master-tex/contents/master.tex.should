@@ -1,71 +1,53 @@
-
-  \documentclass[a4paper,parskip=half*,12pt]{scrartcl} 
+\documentclass[a4paper,parskip=half*,12pt]{scrartcl} 
 
 \usepackage{relsize}
-\usepackage{enumerate}
 
 \usepackage{amsmath,amstext,amssymb}
 
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc} 
 
-\usepackage[paper=a4paper,left=40mm,right=10mm,top=25mm,bottom=10mm]{geometry} 
+
+
+\usepackage{courier}
+
 
 \usepackage[T1]{fontenc}
 
 \usepackage[table]{xcolor}
+\usepackage{color}
 
-\usepackage{ctable} 
 
 \usepackage{url,hyperref}
 \urlstyle{same}
 
-\usepackage{graphicx} 
-
 \usepackage{setspace}
-
-\usepackage{rotating}
-
-\newcommand{\vertikal}[1]{\begin{sideways}#1\end{sideways}}
 
 \clubpenalty = 10000
 \widowpenalty = 10000
 \displaywidowpenalty = 10000
 
-\interfootnotelinepenalty = 10000
+\setlength{\parindent}{1em}
 
-
-\setlength{\parindent}{0em}
-
-
-
-\deffootnote{1em}{1em}{%
-\textsuperscript{\thefootnotemark\ }}
-
-\newcommand{\fbr}[0]{\\}
-
-
-\setlength{\footnotesep}{\baselineskip}
-\renewcommand{\fbr}[0]{\vspace{0.5\baselineskip}\\}
-
-
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
-
-\usepackage{caption}
-
+\setcounter{secnumdepth}{0}
+\setcounter{tocdepth}{0}
 
 \usepackage{fancyhdr}
-\pagestyle{fancy} 
-\fancyhf{} 
-\fancyhead[L]{\nouppercase{\leftmark}}
-\fancyhead[R]{ \thepage}
+\pagestyle{fancy}
 
-\usepackage{color}
+\fancyhead{}
+\fancyfoot{}
 
-\addtokomafont{sectioning}{\rmfamily}
+\fancyhead[L]{ -- }
+\fancyhead[C]{}
+\fancyhead[R]{}
+
+\fancyfoot[L]{}
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage}
 
 
+\onehalfspacing
 
 
 \begin{document}
