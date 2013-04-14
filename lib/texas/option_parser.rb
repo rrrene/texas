@@ -38,11 +38,6 @@ module Texas
         opts.separator ""
         opts.separator "Specific options:"
 
-        opts.on("-b", "--build",
-                "Build the given template") do |contents_template|
-          options.task = :build
-        end
-
         opts.on("-d", "--dry-run", "Run without pdf generation") do |contents_template|
           options.task = :dry
         end
