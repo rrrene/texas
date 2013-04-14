@@ -3,31 +3,21 @@ module Texas
   module Template
     module Helper
       module Markdown
-
-        def chapter(opts = {})
-          if glob = opts[:glob]
-            opts[:templates] = templates_by_glob(glob)
-          end
-          store.__chapters__ ||= []
-          store.__chapters__ << opts
-          partial(:chapter, opts)
+        
+        def bold(text)
+          "**#{text}**"
         end
+        alias b bold
 
-        def center(str)
-          "\\begin{center}#{str}\\end{center}"
-        end
+        def h1(*args); "# #{args}"; end
+        def h1(*args); "## #{args}"; end
+        def h1(*args); "### #{args}"; end
+        def h1(*args); "#### #{args}"; end
 
-        def gray(text)
-          "\\textcolor{gray}{#{text}}"
+        def italic(text)
+          "*#{text}*"
         end
-
-        def page_break
-          "\\clearpage"
-        end
-
-        def scene_delimiter
-          center gray("* * *")
-        end
+        alias i italic
 
       end
     end
