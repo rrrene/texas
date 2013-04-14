@@ -2,7 +2,7 @@ module Texas
   module VERSION #:nodoc:
     MAJOR = 0
     MINOR = 1
-    BUILD = 0
+    BUILD = 1
 
     STRING = [MAJOR, MINOR, BUILD].join('.').freeze
   end
