@@ -32,7 +32,7 @@ describe Texas::Runner do
     end
 
     it "run scenario for --new" do
-      run_scenario "new"
+      run_scenario "new-project"
     end
 
   end
