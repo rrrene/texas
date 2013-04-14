@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'texas'
+require 'bundler'
+Bundler.require
 
 Texas::Runner.new
