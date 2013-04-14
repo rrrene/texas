@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'bundler'
-Bundler.require
+begin
+  Bundler.require
+rescue Bundler::GemfileNotFound => e
+  require 'texas'
+end
 
 Texas::Runner.new
