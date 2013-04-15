@@ -16,6 +16,13 @@ module Texas
           ].compact
         end
 
+        # Returns a subdir with the current template's basename
+        #
+        # Example:
+        # In /example/introduction.tex.erb this method 
+        # returns "/example/introduction" if that directory exists
+        # and nil if it doesn't.
+        #
         def path_with_templates_basename
           subdir = Template.basename @output_filename
           File.directory?(subdir) ? subdir : nil
@@ -54,24 +61,31 @@ module Texas
           end
         end
 
+        # Renders a partial with the given locals.
+        #
         def partial(name, locals = {})
           render("_#{name}", locals)
         end
 
+        # Renders a template with the given locals.
+        #
         def render(name, locals = {})
           template_file = find_template_file!([name], template_extensions)
-          Template.create(template_file, build).__run__(locals)
+          Texas::Template.create(template_file, build).__run__(locals)
         end
 
         # Returns all extensions the Template::Runner can handle.
+        #
         def template_extensions
-          Template.known_extensions
+          Texas::Template.known_extensions
         end
 
+        # Returns all templates in the current template's path matching the given glob
+        #
         def templates_by_glob(glob = "*") 
           files = Dir[File.join(__path__, glob)]
           templates = files.map do |f| 
-            Template.basename(f).gsub(__path__, '') 
+            Texas::Template.basename(f).gsub(__path__, '') 
           end
           templates.uniq.sort
         end
