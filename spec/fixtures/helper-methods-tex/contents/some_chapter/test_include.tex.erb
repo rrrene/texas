@@ -2,6 +2,12 @@ Should find this template relatively and render the template another\_include be
 
 <%= render "another_include" %>
 
+<%= render :template => "another_include" %>
+
+<%= render :templates => ["another_include"] %>
+
+<%= render :glob => "another_*" %>
+
 When using the LaTeX input command, the path should be relative to master.tex e.g. some\_chapter/another\_include
 
 <%= input "another_include" %>

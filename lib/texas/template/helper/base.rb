@@ -69,9 +69,25 @@ module Texas
 
         # Renders a template with the given locals.
         #
-        def render(name, locals = {})
-          template_file = find_template_file!([name], template_extensions)
-          Texas::Template.create(template_file, build).__run__(locals)
+        def render(options, locals = {})
+          if [String, Symbol].include?(options.class)
+            options = {:templates => [options]}
+          end
+          if name = options[:template]
+            options[:templates] = [name]
+          end
+          if glob = options[:glob]
+            options[:templates] = templates_by_glob(glob)
+          end
+          options[:locals] = locals unless locals.empty?
+          render_as_array(options).join(options[:join].to_s)
+        end
+
+        def render_as_array(options)
+          options[:templates].map do |name|
+            template_file = find_template_file!([name], template_extensions)
+            Texas::Template.create(template_file, build).__run__(options[:locals])
+          end
         end
 
         # Returns all extensions the Template::Runner can handle.

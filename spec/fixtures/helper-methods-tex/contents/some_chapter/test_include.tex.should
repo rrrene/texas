@@ -2,6 +2,12 @@ Should find this template relatively and render the template another\_include be
 
 This file is a static .tex file.
 
+This file is a static .tex file.
+
+This file is a static .tex file.
+
+This file is a static .tex file.
+
 When using the LaTeX input command, the path should be relative to master.tex e.g. some\_chapter/another\_include
 
 \input{some_chapter/another_include}
