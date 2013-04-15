@@ -6,9 +6,6 @@ Texas provides an easy way to create PDFs from LaTeX documents using ERb templat
 
 It does this by compiling *.tex.erb templates to *.tex files and then running pdflatex to turn the compiled templates into a PDF file.
 
-* Plain ERb templates, no bells and whistles
-* Build process, template helpers and supported formats are easily extensible
-
 
 ## Installation & Usage
 
