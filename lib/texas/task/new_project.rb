@@ -1,8 +1,12 @@
 module Texas
   module Task
-    class New < Base
+    class NewProject < Base
+      def fixtures_dir(name)
+        File.join(Texas.texas_dir, "spec", "fixtures", name)
+      end
+
       def source_dir
-        File.join(Texas.texas_dir, "spec", "fixtures", "new-project")
+        fixtures_dir "new-project"
       end
 
       def dest_dir

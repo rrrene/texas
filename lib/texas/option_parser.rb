@@ -49,7 +49,7 @@ module Texas
 
         opts.on("-n", "--new [NAME]",
                 "Create new texas project directory") do |name|
-          options.task = :new
+          options.task = :new_project
           options.check_mandatory_arguments = false
           options.load_local_libs = false
           options.new_project_name = name

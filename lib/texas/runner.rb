@@ -59,11 +59,11 @@ module Texas
     end
 
     def fallback_task_class 
-      class_name = @options.task.to_s.capitalize
+      class_name = @options.task.to_s.split('_').map(&:capitalize).join
       begin
         eval("::Texas::Task::#{class_name}")
       rescue
-        puts "Failed to fallback for ::Task::#{class_name}"
+        puts "Failed to fallback for Texas::Task::#{class_name}"
         exit
       end
     end
