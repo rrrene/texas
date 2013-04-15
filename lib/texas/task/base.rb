@@ -12,10 +12,6 @@ module Texas
         @build ||= klass.run(options)
       end
 
-      def track
-        build.track
-      end
-
       def run
       end
     end
