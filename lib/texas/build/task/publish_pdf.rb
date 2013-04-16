@@ -29,7 +29,7 @@ module Texas
             output = `grep "Output written on" #{file}`
             numbers = output.scan(/\((\d+?) pages\, (\d+?) bytes\)\./).flatten
             @page_count = numbers.first.to_i
-            "Written PDF in #{dest_file.gsub(root, '')} (#{@page_count} pages)".green
+            "Written PDF in #{dest_file.gsub(build.root, '')} (#{@page_count} pages)".green
           }
         end
 
