@@ -13,7 +13,7 @@ module Texas
             path_with_templates_basename, 
             build_path, 
             build.root
-          ].compact
+          ].compact.uniq
         end
 
         # Returns a subdir with the current template's basename
