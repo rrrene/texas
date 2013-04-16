@@ -60,3 +60,4 @@ Texas::Template.known_extensions = []
 
 require_relative 'template/helper'
 require_relative 'template/runner'
+require_relative 'template/template_error'

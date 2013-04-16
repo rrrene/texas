@@ -46,6 +46,10 @@ module Texas
     def __render__(locals = {})
       @locals = OpenStruct.new(locals)
       ERB.new(@content, nil, nil, "@erbout").result(binding)
+    rescue TemplateError => ex
+      raise ex
+    rescue Exception => ex
+      raise TemplateError.new(self, ex.message, ex)
     end
 
     def __run__(locals = {})
