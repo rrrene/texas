@@ -29,10 +29,28 @@ module Texas
         known_extensions.concat extensions
       end
 
+      # Registers the methods defined in a module to use
+      # them in templates.
+      #
+      # Example:
+      #   module Foo
+      #     def bar; "foobar"; end
+      #   end
+      #   Template.register_helper Foo
+      #
+      #   # afterwards, this prints "foobar" in any template:
+      #   <%= bar %>
+      #
       def register_helper(klass)
         Template::Runner::Base.__send__ :include, klass
       end
 
+      # Returns a Template runner for the given filename
+      #
+      # Example:
+      #   Template.create("some_file.tex.erb", build)
+      #   # => #<Template::Runner::TeX ...>
+      #
       def create(filename, build)
         handler(filename).new(filename, build)
       end
@@ -40,7 +58,7 @@ module Texas
       # Returns the filename without the template extension
       #
       # Example:
-      #   input_path("/home/rene/github/sample_project/tmp/build/chapter-01/contents.md.erb")
+      #   Template.basename("/home/rene/github/sample_project/tmp/build/chapter-01/contents.md.erb")
       #   # => "/home/rene/github/sample_project/tmp/build/chapter-01/contents"
       #
       def basename(filename)

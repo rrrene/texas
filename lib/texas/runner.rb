@@ -41,6 +41,7 @@ module Texas
     end
     
     # Display the error message that caused the exception.
+    #
     def display_error_message(ex)
       puts "#{@options.task} aborted!"
       puts ex.message
@@ -51,11 +52,15 @@ module Texas
       end
     end
 
+    # Extends String with Term::ANSIColor if options demand it.
+    #
     def extend_string_class
       mod = @options.colors ? Term::ANSIColor : Term::NoColor
       String.send :include, mod
     end
 
+    # Load lib/init.rb if present in current project.
+    #
     def load_local_libs
       init_file = File.join(@options.work_dir, "lib", "init.rb")
       require init_file if File.exist?(init_file)
@@ -68,6 +73,8 @@ module Texas
       exit 1
     end
 
+    # Returns the class for the given task.
+    #
     def task_class
       map = {
         :build      => Build::Final,

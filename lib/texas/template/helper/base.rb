@@ -69,7 +69,7 @@ module Texas
           render("_#{name}", locals)
         end
 
-        # Renders a template with the given locals.
+        # Renders one or more templates with the given locals.
         #
         def render(options, locals = {})
           if [String, Symbol].include?(options.class)

@@ -12,7 +12,6 @@ module Texas
       @options = OpenStruct.new
     end
 
-    #
     # Return a structure describing the options.
     #
     def parse
@@ -34,7 +33,7 @@ module Texas
       lookup_and_execute_require_option(args)
       
       opts = ::OptionParser.new do |opts|
-        opts.banner = "Usage: texas [options]"
+        opts.banner = "Usage: texas [CONTENTS_TEMPLATE] [options]"
 
         opts.separator ""
         opts.separator "Specific options:"
@@ -117,11 +116,17 @@ module Texas
 
     private
 
-    # This method can be overwritten by other libraries
-    # to parse additional options
+    # Is empty. It can be overwritten by other libraries to 
+    # parse and display additional options.
+    #
     def parse_additional_options(opts)
     end
     
+    # Parses the given arguments for the --require option and requires
+    # it if present. This is done separately from the regular option parsing 
+    # to enable the required library to modify Texas, 
+    # e.g. overwrite OptionParser#parse_additional_options.
+    #
     def lookup_and_execute_require_option(args)
       args.each_with_index do |v, i|
         if %w(-r --require).include?(v)
