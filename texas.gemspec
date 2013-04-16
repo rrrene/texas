@@ -1,5 +1,5 @@
 $:.unshift('lib')
-require 'texas'
+require 'texas/version'
 
 Gem::Specification.new do |s|
   s.author = "René Föhring"
@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.files = Dir[ 'lib/**/*', 'spec/**/*', 'bin/*', 'contents/*']
   s.require_path = 'lib'
   s.requirements << 'none'
-  s.executables << 'texas'
+  s.executables  << 'texas'
 
   s.add_runtime_dependency 'term-ansicolor'
   s.add_runtime_dependency 'listen'
