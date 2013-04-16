@@ -16,12 +16,12 @@ module Texas
         @contents_dir = options.contents_dir
         @contents_template = options.contents_template
         @master_file = File.join(__path__, MASTER_TEMPLATE)
-
+        
         verbose { "Starting #{self.class}" }
         verbose { "[i] work_dir: #{options.work_dir}".dark }
         verbose { "[i] contents_dir: #{@contents_dir}".dark }
         verbose { "[i] contents_template: #{@contents_template}".dark }
-        verbose { "[i] build_path: #{@build_path}".dark }
+        verbose { "[i] build_path: #{__path__}".dark }
       end
 
       def __path__
@@ -65,6 +65,7 @@ module Texas
 
       def run_build_task(klass)
         klass = eval("::Texas::Build::Task::#{klass}") if [Symbol, String].include?(klass.class)
+        verbose { "[b] #{klass}".dark }
         klass.new(self).run
       end
 
