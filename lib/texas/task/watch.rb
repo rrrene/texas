@@ -17,16 +17,16 @@ module Texas
 
       def self.directories_to_watch
         arr = []
-        arr << "tex"
-        arr << "figures"
+        arr << "tex"      if Dir.exists?("tex")
+        arr << "contents" if Dir.exists?("contents")
+        arr << "figures"  if Dir.exists?("figures")
         arr << Texas.texas_dir
         arr
       end
 
       def self.rebuild
         started_at = Time.now.to_i
-        @build = Build::Final.new(run_options)
-        @build.run
+        Build::Final.run(run_options)
         finished_at = Time.now.to_i
         puts (finished_at - started_at).to_s + " seconds to rebuild"
       rescue Exception => e
