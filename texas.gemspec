@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'term-ansicolor'
   s.add_runtime_dependency 'listen'
-  s.add_runtime_dependency 'rb-inotify', '~> 0.8.8'
+  s.add_runtime_dependency 'rb-inotify', '~> 0.9'
 end
