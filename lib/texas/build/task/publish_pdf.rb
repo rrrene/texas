@@ -35,9 +35,17 @@ module Texas
 
         def run_pdflatex
           verbose { "Running pdflatex in #{build_path} ..." }
-          Dir.chdir build_path
-          `pdflatex #{File.basename(master_file)}`
-          `pdflatex #{File.basename(master_file)}`
+          run_in build_path do
+            `pdflatex #{File.basename(master_file)}`
+            `pdflatex #{File.basename(master_file)}`
+          end
+        end
+
+        def run_in(path)
+          old_path = Dir.pwd
+          Dir.chdir path
+          yield
+          Dir.chdir old_path
         end
 
       end
