@@ -31,12 +31,14 @@ module Texas
         # Searches for the given file in +possible_paths+, also checking for +possible_exts+ as extensions
         #
         # Example:
-        #   find_template_file(["figures", "titel"], [:pdf, :png])
+        #   find_template_file(["figures", "some-chart"], [:pdf, :png], ["", "tmp", "tmp/build"])
         #   # => will check
-        #          figures/titel.pdf
-        #          figures/titel.png
-        #          tmp/figures/titel.pdf
-        #          tmp/figures/titel.png
+        #          figures/some-chart.pdf
+        #          figures/some-chart.png
+        #          tmp/figures/some-chart.pdf
+        #          tmp/figures/some-chart.png
+        #          tmp/build/figures/some-chart.pdf
+        #          tmp/build/figures/some-chart.png
         #
         def find_template_file(parts, possible_exts = [], possible_paths = default_search_paths)
           possible_paths.each do |base|
