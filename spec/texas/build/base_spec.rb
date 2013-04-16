@@ -35,7 +35,7 @@ describe Texas::Build::Base do
   end
 
   describe "#run_build_task" do
-    it "should instanciate the given class and call the run method" do
+    it "should instantiate the given class and call the run method" do
       FoobarTask.foo.nil?.should == true
       test_build.run_build_task FoobarTask
       FoobarTask.foo.should == :bar
