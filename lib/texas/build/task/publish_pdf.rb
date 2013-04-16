@@ -27,7 +27,7 @@ module Texas
           verbose {
             file = File.join(build_path, "master.log")
             output = `grep "Output written on" #{file}`
-            numbers = output.scan(/\((\d+?) pages\, (\d+?) bytes\)\./).flatten
+            numbers = output.scan(/\((\d+?) pages?\, (\d+?) bytes\)\./).flatten
             @page_count = numbers.first.to_i
             "Written PDF in #{dest_file.gsub(build.root, '')} (#{@page_count} pages)".green
           }
