@@ -24,6 +24,7 @@ module Texas
       options.load_local_libs = true
       options.contents_dir = Texas.contents_subdir_name
       options.contents_template = find_contents_file("contents")
+      options.backtrace = false
       options.colors = true
       options.merge_config = nil
       options.verbose = false
@@ -71,17 +72,18 @@ module Texas
         opts.separator ""
         opts.separator "Common options:"
 
-        # Boolean switch.
+        opts.on("--[no-]backtrace", "Switch backtrace") do |v|
+          options.backtrace = v
+        end
+
         opts.on("-c", "--[no-]color", "Switch colors") do |v|
           options.colors = v
         end
 
-        # Boolean switch.
         opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
           options.verbose = v
         end
 
-        # Boolean switch.
         opts.on("-w", "--[no-]warnings", "Switch warnings") do |v|
           options.warnings = v
         end

@@ -37,9 +37,20 @@ module Texas
       Texas.warnings = @options.warnings
       load_local_libs if @options.load_local_libs
       @task_instance = task_class.new(@options)
-      @task_instance.run
+      run
     end
     
+    # Display the error message that caused the exception.
+    def display_error_message(ex)
+      puts "#{@options.task} aborted!"
+      puts ex.message
+      if @options.backtrace
+        puts ex.backtrace
+      else
+        puts "(See full trace with --backtrace)"
+      end
+    end
+
     def extend_string_class
       mod = @options.colors ? Term::ANSIColor : Term::NoColor
       String.send :include, mod
@@ -48,6 +59,13 @@ module Texas
     def load_local_libs
       init_file = File.join(@options.work_dir, "lib", "init.rb")
       require init_file if File.exist?(init_file)
+    end
+
+    def run
+      @task_instance.run
+    rescue Exception => ex
+      display_error_message ex
+      exit 1
     end
 
     def task_class
