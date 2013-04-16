@@ -57,7 +57,7 @@ module Texas
           if filename = find_template_file(parts, possible_exts, possible_paths)
             filename
           else
-            raise TemplateError.new(self, "File doesnot exists anywhere: #{parts.size > 1 ? parts : parts.first}")
+            raise TemplateError.new(self, "File doesn't exists anywhere: #{parts.size > 1 ? parts : parts.first}")
           end
         end
 
