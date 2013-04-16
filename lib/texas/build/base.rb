@@ -16,7 +16,7 @@ module Texas
         @contents_dir = options.contents_dir
         @contents_template = options.contents_template
         @master_file = File.join(__path__, MASTER_TEMPLATE)
-        
+
         verbose { "Starting #{self.class}" }
         verbose { "[i] work_dir: #{options.work_dir}".dark }
         verbose { "[i] contents_dir: #{@contents_dir}".dark }
@@ -82,12 +82,6 @@ module Texas
       end
 
       class << self
-        def run(options)
-          instance = self.new(options)
-          instance.run
-          instance
-        end
-
         def tasks(key)
           @@tasks ||= {}
           initialize_tasks if @@tasks[self.to_s].nil?

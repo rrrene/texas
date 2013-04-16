@@ -26,7 +26,7 @@ module Texas
 
       def self.rebuild
         started_at = Time.now.to_i
-        Build::Final.run(run_options)
+        Build::Final.new(run_options).run
         finished_at = Time.now.to_i
         puts (finished_at - started_at).to_s + " seconds to rebuild"
       rescue Exception => e
