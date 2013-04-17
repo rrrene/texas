@@ -62,7 +62,7 @@ describe Texas::Build::Base do
   end
   
   describe "#store" do
-    it "should return a object that can store values" do
+    it "should return an object that can store values" do
       build = fake_build
       store = build.store
       store.test_value.should == nil
