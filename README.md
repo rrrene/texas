@@ -1,6 +1,8 @@
 # Texas
 
-[![Build Status](https://travis-ci.org/rrrene/texas.png?branch=master)](https://travis-ci.org/rrrene/texas) [![Gem Version](https://badge.fury.io/rb/texas.png)](http://badge.fury.io/rb/texas)
+[![Build Status](https://travis-ci.org/rrrene/texas.png?branch=master)](https://travis-ci.org/rrrene/texas) 
+[![Code Climate](https://codeclimate.com/github/rrrene/texas.png)](https://codeclimate.com/github/rrrene/texas)
+[![Gem Version](https://badge.fury.io/rb/texas.png)](http://badge.fury.io/rb/texas)
 
 ## Description
 
