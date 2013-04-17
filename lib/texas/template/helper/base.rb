@@ -43,10 +43,7 @@ module Texas
         def find_template_file(parts, possible_exts = [], possible_paths = default_search_paths)
           possible_paths.each do |base|
             ([""] + possible_exts).each do |ext|
-              path = parts.clone.map(&:to_s).map(&:dup)
-              path.unshift base.to_s
-              path.last << ".#{ext}" unless ext.empty?
-              filename = File.join(*path)
+              filename = filename_for_find(parts, base, ext)
               return filename if File.exist?(filename) && !File.directory?(filename)
             end
           end
@@ -61,6 +58,13 @@ module Texas
           else
             raise TemplateError.new(self, "File doesn't exists anywhere: #{parts.size > 1 ? parts : parts.first}")
           end
+        end
+
+        def filename_for_find(parts, base, ext = nil)
+          path = parts.map(&:to_s).map(&:dup)
+          path.unshift base.to_s
+          path.last << ".#{ext}" unless ext.empty?
+          File.join(*path)
         end
 
         # Renders a partial with the given locals.
@@ -107,7 +111,6 @@ module Texas
           end
           templates.uniq.sort
         end
-
       end
     end
   end

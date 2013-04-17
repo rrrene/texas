@@ -24,13 +24,7 @@ module Texas
           tmp_file = File.join(build_path, "#{File.basename(master_file, '.tex')}.pdf")
           FileUtils.mkdir_p File.dirname(dest_file)
           FileUtils.copy tmp_file, dest_file
-          verbose {
-            file = File.join(build_path, "master.log")
-            output = `grep "Output written on" #{file}`
-            numbers = output.scan(/\((\d+?) pages?\, (\d+?) bytes\)\./).flatten
-            @page_count = numbers.first.to_i
-            "Written PDF in #{dest_file.gsub(build.root, '')} (#{@page_count} pages)".green
-          }
+          verbose { verbose_info }
         end
 
         def run_pdflatex
@@ -46,6 +40,17 @@ module Texas
           Dir.chdir path
           yield
           Dir.chdir old_path
+        end
+
+        def tex_log_file
+          File.join(build_path, "master.log")
+        end
+
+        def verbose_info
+          output = `grep "Output written on" #{tex_log_file}`
+          numbers = output.scan(/\((\d+?) pages?\, (\d+?) bytes\)\./).flatten
+          @page_count = numbers.first.to_i
+          "Written PDF in #{dest_file.gsub(build.root, '')} (#{@page_count} pages)".green
         end
 
       end

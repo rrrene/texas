@@ -16,12 +16,7 @@ module Texas
         @contents_dir = options.contents_dir
         @contents_template = options.contents_template
         @master_file = File.join(__path__, MASTER_TEMPLATE)
-
-        verbose { "Starting #{self.class}" }
-        verbose { "[i] work_dir: #{options.work_dir}".dark }
-        verbose { "[i] contents_dir: #{@contents_dir}".dark }
-        verbose { "[i] contents_template: #{@contents_template}".dark }
-        verbose { "[i] build_path: #{__path__}".dark }
+        verbose { verbose_info }
       end
 
       def __path__
@@ -71,6 +66,16 @@ module Texas
 
       def run
         run_build_tasks before_tasks, basic_tasks, after_tasks
+      end
+
+      def verbose_info
+        [
+          "Starting #{self.class}",
+          "[i] work_dir: #{options.work_dir}".dark,
+          "[i] contents_dir: #{@contents_dir}".dark,
+          "[i] contents_template: #{@contents_template}".dark,
+          "[i] build_path: #{__path__}".dark
+        ].join("\n")
       end
 
       %w(before basic after).each do |method|
