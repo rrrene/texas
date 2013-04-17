@@ -16,40 +16,27 @@ module Texas
     #
     def parse
       set_default_options
-
       lookup_and_execute_require_option(args)
-      
-      opts = ::OptionParser.new do |opts|
-        opts.banner = "Usage: texas [CONTENTS_TEMPLATE] [options]"
-        parse_specific_options(opts)
-        parse_additional_options(opts)
-        parse_common_options(opts)
-      end
-
-      opts.parse!(args)
-
-      unless args.empty?
-        f = args.shift
-        options.contents_template = find_contents_file(f)
-        options.contents_dir = find_contents_dir(f)
-      end
-      if options.check_mandatory_arguments
-        check_mandatory! options
-      end
+      parse_options
+      set_contents_template_from_args unless args.empty?
+      check_mandatory! if options.check_mandatory_arguments
       options
     end
 
     private
 
-    def check_mandatory!(options)
+    def check_mandatory!
       if options.work_dir.nil?
-        warn "texas: missing file operand\nTry `texas --help' for more information."
-        exit 1
+        kill "missing file operand"
       end
       if options.contents_template.nil?
-        warn "texas: could not find contents template\nTry `texas --help' for more information."
-        exit 1
+        kill "could not find contents template"
       end
+    end
+
+    def kill(msg)
+      warn "texas: #{msg}\nTry `texas --help' for more information."
+      exit 1
     end
 
     def find_work_dir(start_dir = Dir.pwd)
@@ -84,18 +71,28 @@ module Texas
       end
     end
 
-  # Parses the given arguments for the --require option and requires
-  # it if present. This is done separately from the regular option parsing 
-  # to enable the required library to modify Texas, 
-  # e.g. overwrite OptionParser#parse_additional_options.
-  #
-  def lookup_and_execute_require_option(args)
-    args.each_with_index do |v, i|
-      if %w(-r --require).include?(v)
-        require args[i+1]
+    # Parses the given arguments for the --require option and requires
+    # it if present. This is done separately from the regular option parsing 
+    # to enable the required library to modify Texas, 
+    # e.g. overwrite OptionParser#parse_additional_options.
+    #
+    def lookup_and_execute_require_option(args)
+      args.each_with_index do |v, i|
+        if %w(-r --require).include?(v)
+          require args[i+1]
+        end
       end
     end
-  end
+
+    def parse_options
+      opts = ::OptionParser.new do |opts|
+        opts.banner = "Usage: texas [CONTENTS_TEMPLATE] [options]"
+        parse_specific_options(opts)
+        parse_additional_options(opts)
+        parse_common_options(opts)
+      end
+      opts.parse!(args)
+    end
 
     # Is empty. It can be overwritten by other libraries to 
     # parse and display additional options.
@@ -185,6 +182,12 @@ module Texas
       options.verbose = false
       options.warnings = true
       options.open_pdf = true
+    end
+
+    def set_contents_template
+      f = args.shift
+      options.contents_template = find_contents_file(f)
+      options.contents_dir = find_contents_dir(f)
     end
 
   end
