@@ -23,6 +23,12 @@ describe Texas::Runner do
       run_scenario "texasrc"
     end
 
+    it "run scenario for .texasrc with --merge-config and fail" do
+      lambda {
+        run_scenario "texasrc", :merge_config => "other_mode"
+      }.should raise_error
+    end
+
     it "run scenario for lib/ helpers" do
       run_scenario "lib-helpers"
     end
