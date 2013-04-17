@@ -1,5 +1,7 @@
 # Texas
 
+[![Build Status](https://travis-ci.org/rrrene/texas.png?branch=master)](https://travis-ci.org/rrrene/texas) [![Gem Version](https://badge.fury.io/rb/texas.png)](http://badge.fury.io/rb/texas)
+
 ## Description
 
 Texas provides an easy way to create PDFs from LaTeX documents using ERb templates.
