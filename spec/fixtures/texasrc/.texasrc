@@ -1,2 +1,7 @@
 document:
   some_value: 42
+  
+other_mode:
+  document:
+    some_value: 24
+    some_other_value: true
