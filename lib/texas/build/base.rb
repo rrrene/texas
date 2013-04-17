@@ -33,21 +33,8 @@ module Texas
         @current_template = t
       end
 
-      def document_struct
-        @document_struct ||= begin
-          hash = config["document"] || {}
-          if options.merge_config
-            hash.merge! config[options.merge_config]
-          end
-          OpenStruct.new(hash)
-        end
-      end
-      
       def config
-        @config ||= begin
-          filename = File.join(root, CONFIG_FILE)
-          File.exist?(filename) ? YAML.load_file(filename) : {}
-        end
+        @config ||= Config.create File.join(root, CONFIG_FILE), options.merge_config
       end
 
       def dest_file

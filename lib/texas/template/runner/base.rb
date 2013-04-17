@@ -28,7 +28,7 @@ module Texas
     end
     
     def document
-      build.document_struct
+      build.config.document
     end
 
     def store
