@@ -71,6 +71,22 @@ describe Texas::Build::Base do
     end
   end
 
+  describe "#config" do
+    it "should return an object that can be accessed by []" do
+      build = fake_build
+      config = build.config
+      config[:test_value].should == nil
+    end
+  end
+
+  describe "#document_struct" do
+    it "should return an object that can store values" do
+      build = fake_build
+      document = build.document_struct
+      document.test_value.should == nil
+    end
+  end
+
   describe "#dest_file" do
     it "should return the PDF's filename" do
       build = fake_build
