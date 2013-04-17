@@ -65,7 +65,7 @@ describe Texas::Build::Base do
     it "should return an object that can store values" do
       build = fake_build
       store = build.store
-      store.test_value.should == nil
+      store.test_value.should be_nil
       store.test_value = 42
       store.test_value.should == 42
     end
@@ -75,7 +75,7 @@ describe Texas::Build::Base do
     it "should return an object that can be accessed by []" do
       build = fake_build
       config = build.config
-      config[:test_value].should == nil
+      config[:test_value].should be_nil
     end
   end
 
