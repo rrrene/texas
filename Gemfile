@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'rake'
 gem 'terminal-table'
 gem 'listen'
 gem 'rb-inotify', '~> 0.8.8'

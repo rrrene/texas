@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.0.0
+before_install:
+  # Ignore *-doc dpkg packages which saves like 300 MB of downloading
+  - |-
+    sudo bash -c 'echo -e "Package: *-doc
+    Pin: release o=Debian
+    Pin-Priority: -1" > /etc/apt/preferences.d/ignore-doc-packages'
+  - sudo apt-get -qq update
+  - sudo apt-get install texlive-binaries texlive-latex-base pandoc texlive-latex-extra
