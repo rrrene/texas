@@ -2,3 +2,5 @@
 tmp
 .rvmrc
 pkg
+.ruby-version
+.ruby-gemset
