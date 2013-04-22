@@ -184,7 +184,7 @@ module Texas
       options.open_pdf = true
     end
 
-    def set_contents_template
+    def set_contents_template_from_args
       f = args.shift
       options.contents_template = find_contents_file(f)
       options.contents_dir = find_contents_dir(f)
