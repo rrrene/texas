@@ -55,7 +55,7 @@ module Texas
         # Returns a path relative to the build_path
         #
         # Example:
-        #   input_path("/home/rene/github/sample_project/tmp/build/contents.tex.erb")
+        #   relative_template_filename("/home/rene/github/sample_project/tmp/build/contents.tex.erb")
         #   # => "contents.tex.erb"
         #
         def relative_template_filename(path, possible_exts = Template.known_extensions)
@@ -66,7 +66,7 @@ module Texas
         # Returns a path relative to the build_path and strips the template extension
         #
         # Example:
-        #   input_path("/home/rene/github/sample_project/tmp/build/contents.tex.erb")
+        #   relative_template_basename("/home/rene/github/sample_project/tmp/build/contents.tex.erb")
         #   # => "contents"
         #
         def relative_template_basename(path)
