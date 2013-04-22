@@ -4,6 +4,14 @@ describe Texas::Runner do
   describe "#initialize" do
 
     it "run basic tex scenario" do
+      run_scenario "basic-tex", %w(-d)
+    end
+
+    it "run basic tex scenario with some arguments" do
+      run_scenario "basic-tex", %w(-d contents/input_template)
+    end
+
+    it "run basic tex scenario" do
       run_scenario "basic-tex"
     end
 

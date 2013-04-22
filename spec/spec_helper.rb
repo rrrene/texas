@@ -38,7 +38,7 @@ def use_scenario(scenario)
 end
 
 def run_scenario(scenario, options = {}, &block)
-  options = default_options.merge(options)
+  options = default_options.merge(options) if options.is_a?(Hash)
   work_dir = use_scenario(scenario)
   runner = Texas::Runner.new(options)
   if block_given?
@@ -52,7 +52,9 @@ def match_should_templates(work_dir)
   should_templates = Dir[File.join(work_dir, "tmp", "build", "**/*.tex.should")]
   should_templates.each do |should_file|
     generated_file = should_file.gsub(/\.should$/, '')
-    File.read(generated_file).should == File.read(should_file)
+    if File.exist?(generated_file)
+      File.read(generated_file).should == File.read(should_file)
+    end
   end
 end
 

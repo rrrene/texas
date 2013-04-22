@@ -24,14 +24,8 @@ module Texas
   class Runner
     attr_reader :task_instance
 
-    def initialize(force_options = nil)
-      @options = if force_options.nil?
-        Texas::OptionParser.new(ARGV).parse
-      else
-        opts = Texas::OptionParser.new([]).parse
-        force_options.each { |k, v| opts.send("#{k}=", v) }
-        opts
-      end
+    def initialize(args = nil)
+      @options = options_from_args args
       extend_string_class
       Texas.verbose = @options.verbose
       Texas.warnings = @options.warnings
@@ -64,6 +58,16 @@ module Texas
     def load_local_libs
       init_file = File.join(@options.work_dir, "lib", "init.rb")
       require init_file if File.exist?(init_file)
+    end
+
+    def options_from_args(args)
+      if args.is_a?(Hash)
+        opts = Texas::OptionParser.new([]).parse
+        args.each { |k, v| opts.send("#{k}=", v) }
+        opts
+      else
+        Texas::OptionParser.new(args).parse
+      end
     end
 
     def run

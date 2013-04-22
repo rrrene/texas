@@ -7,4 +7,4 @@ rescue Bundler::GemfileNotFound => e
   require 'texas'
 end
 
-Texas::Runner.new
+Texas::Runner.new(ARGV)
