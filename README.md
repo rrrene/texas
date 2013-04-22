@@ -74,6 +74,10 @@ This will result in
 
 You can render any other template through the `render` method.
 
+    <%= render :template => "some_template" %>
+
+Or by shorthand:
+
     <%= render :some_template %>
 
 This will look for a template with the basename `some_template` and any of the supported extensions:
@@ -109,6 +113,19 @@ this would be a valid project:
 
 The `goals` template is found, because it lives in the same directory as the template rendering it. The `primary` and `secondary` templates are found, because they live in a directory called like the template placing the `render`-call ("goals").
 
+If you want to render multiple templates, you can provide them via the `:templates` option:
+	
+	# contents.tex.erb
+	
+    <%= render :templates => ["goals/primary", "goals/secondary"] %>
+
+Or you can provide a glob:
+	
+	# contents.tex.erb
+	
+    <%= render :glob => "goals/*" %>
+
+All of above examples result in the same rendered `contents.tex`.
 
 
 ### Using custom helpers
