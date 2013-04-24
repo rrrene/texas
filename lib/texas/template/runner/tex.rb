@@ -1,4 +1,4 @@
-require 'texas/template/helper/tex'
+require_relative '../helper/tex'
 
 class Texas::Template::Runner::TeX < Texas::Template::Runner::Base
   include Texas::Template::Helper::TeX

@@ -1,5 +1,5 @@
-require 'texas/template/helper/base'
-require 'texas/template/helper/info'
+require_relative '../helper/base'
+require_relative '../helper/info'
 require 'erb'
 
 module Texas

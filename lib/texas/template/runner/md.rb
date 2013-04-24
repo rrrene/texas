@@ -1,4 +1,4 @@
-require 'texas/template/helper/md'
+require_relative '../helper/md'
 
 class Texas::Template::Runner::Markdown < Texas::Template::Runner::Base
   include Texas::Template::Helper::Markdown
