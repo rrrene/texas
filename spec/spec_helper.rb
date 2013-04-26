@@ -23,7 +23,7 @@ def original_test_data_dir(scenario)
   File.join(File.dirname(__FILE__), 'fixtures', scenario.to_s)
 end
 
-def test_data_dir(scenario)
+def test_data_dir(scenario = "")
   File.join(tmp_dir, scenario.to_s)
 end
 
@@ -59,8 +59,7 @@ def match_should_templates(work_dir)
 end
 
 RSpec.configure do |config|
-  config.before(:each) {
-#    rebuild_test_data_dir!
-#    Dir.chdir(test_data_dir)
-  }
+  config.before(:each) do
+    Dir.chdir test_data_dir
+  end
 end
