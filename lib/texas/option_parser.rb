@@ -85,50 +85,62 @@ module Texas
     end
 
     def parse_options
-      opts = ::OptionParser.new do |opts|
-        opts.banner = "Usage: texas [CONTENTS_TEMPLATE] [options]"
-        parse_specific_options(opts)
-        parse_additional_options(opts)
-        parse_common_options(opts)
+      parser = ::OptionParser.new do |parser|
+        parser.banner = "Usage: texas [CONTENTS_TEMPLATE] [options]"
+        parse_specific_options(parser)
+        parse_additional_options(parser)
+        parse_common_options(parser)
       end
-      opts.parse!(args)
+      parser.parse!(args)
     end
 
-    # Is empty. It can be overwritten by other libraries to 
-    # parse and display additional options.
-    #
-    def parse_additional_options(opts)
+    def parse_additional_options(parser)
+      if arr = self.class.parse_options_procs
+        parser.separator ""
+        parser.separator "Custom options:"
+        arr.each do |proc|
+          proc.(parser, options)
+        end
+      end
     end
 
-    def parse_common_options(opts)
-      opts.separator ""
-      opts.separator "Common options:"
+    def self.parse_options_procs
+      @@parse_options_procs ||= []
+    end
 
-      opts.on("--[no-]backtrace", "Switch backtrace") do |v|
+    def self.parse_additional_options(&block)
+      parse_options_procs << block
+    end
+
+    def parse_common_options(parser)
+      parser.separator ""
+      parser.separator "Common options:"
+
+      parser.on("--[no-]backtrace", "Switch backtrace") do |v|
         options.backtrace = v
       end
 
-      opts.on("-c", "--[no-]color", "Switch colors") do |v|
+      parser.on("-c", "--[no-]color", "Switch colors") do |v|
         options.colors = v
       end
 
-      opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+      parser.on("-v", "--[no-]verbose", "Run verbosely") do |v|
         options.verbose = v
       end
 
-      opts.on("-w", "--[no-]warnings", "Switch warnings") do |v|
+      parser.on("-w", "--[no-]warnings", "Switch warnings") do |v|
         options.warnings = v
       end
 
       # No argument, shows at tail.  This will print an options summary.
       # Try it and see!
-      opts.on_tail("-h", "--help", "Show this message") do
-        puts opts
+      parser.on_tail("-h", "--help", "Show this message") do
+        puts parser
         exit
       end
 
       # Another typical switch to print the version.
-      opts.on_tail("--version", "Show version") do
+      parser.on_tail("--version", "Show version") do
         puts Texas::VERSION::STRING
         exit
       end
@@ -136,20 +148,20 @@ module Texas
 
     # Parses the specific options.
     #
-    def parse_specific_options(opts)
-      opts.separator ""
-      opts.separator "Specific options:"
+    def parse_specific_options(parser)
+      parser.separator ""
+      parser.separator "Specific options:"
 
-      opts.on("-d", "--dry-run", "Run without pdf generation") do |contents_template|
+      parser.on("-d", "--dry-run", "Run without pdf generation") do |contents_template|
         options.task = :dry
       end
 
-      opts.on("-m", "--merge-config [CONFIG]",
+      parser.on("-m", "--merge-config [CONFIG]",
               "Merge config with key from .texasrc") do |key|
         options.merge_config = key
       end
 
-      opts.on("-n", "--new [NAME]",
+      parser.on("-n", "--new [NAME]",
               "Create new texas project directory") do |name|
         options.task = :new_project
         options.check_mandatory_arguments = false
@@ -157,13 +169,13 @@ module Texas
         options.new_project_name = name
       end
 
-      opts.on("-r", "--require [LIBRARY]", "Require library before running texas") do |lib|
+      parser.on("-r", "--require [LIBRARY]", "Require library before running texas") do |lib|
         # this block does nothing
         # require was already performed by lookup_and_execute_require_option
         # this option is here to ensure the -r switch is listed in the help option
       end
 
-      opts.on("--watch", "Watch the given template") do |contents_template|
+      parser.on("--watch", "Watch the given template") do |contents_template|
         options.task = :watch
         options.open_pdf = false
       end
