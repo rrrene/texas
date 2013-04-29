@@ -60,6 +60,7 @@ end
 
 RSpec.configure do |config|
   config.before(:each) do
+    FileUtils.mkdir_p test_data_dir
     Dir.chdir test_data_dir
   end
 end
