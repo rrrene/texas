@@ -1,5 +1,11 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
+def pandoc_present?
+  where = `which pandoc`
+  !where.empty?
+end
+
+
 describe Texas::Runner do
   describe "#initialize" do
 
@@ -15,7 +21,7 @@ describe Texas::Runner do
       run_scenario "basic-tex"
     end
 
-    it "run basic markdown scenario" do
+    it "run basic markdown scenario", :if => pandoc_present? do
       run_scenario "basic-md"
     end
 
@@ -23,7 +29,7 @@ describe Texas::Runner do
       run_scenario "different-master-tex"
     end
 
-    it "run scenario for TeX helper methods" do
+    it "run scenario for TeX helper methods", :if => pandoc_present? do
       run_scenario "helper-methods-tex"
     end
 
