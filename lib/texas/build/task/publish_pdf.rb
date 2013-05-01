@@ -16,12 +16,12 @@ module Texas
         end
 
         def run
-          compile_pdf
+          latex_cmd_output = compile_pdf
           if compile_pdf_successfull?
             compile_pdf # again
             copy_pdf_file_to_dest_dir
           else
-            run_in(build_path) { puts `cat #{tex_log_file}` }
+            puts latex_cmd_output
             raise "Error while running: `#{latex_cmd}`"
           end
         end
@@ -48,8 +48,9 @@ module Texas
         def run_in(path)
           old_path = Dir.pwd
           Dir.chdir path
-          yield
+          return_value = yield
           Dir.chdir old_path
+          return_value
         end
 
         def tex_log_file
