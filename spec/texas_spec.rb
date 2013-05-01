@@ -43,6 +43,12 @@ describe Texas::Runner do
       }.should raise_error
     end
 
+    it "run scenario for pdflatex-error and fail" do
+      lambda {
+        run_scenario "pdflatex-error"
+      }.should raise_error
+    end
+
     it "run scenario for lib/ helpers" do
       run_scenario "lib-helpers"
     end
