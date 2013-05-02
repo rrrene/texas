@@ -2,10 +2,7 @@ module Texas
   module Build
     module Task
       class PublishPDF < Base
-
-        def master_file
-          build.master_file
-        end
+        DEFAULT_COMPILE_CMD = 'pdflatex -halt-on-error "#{File.basename(build.master_file)}"'
 
         def build_path
           build.__path__
@@ -16,13 +13,14 @@ module Texas
         end
 
         def run
+          verbose { "Running: `#{compile_cmd}`" }
           latex_cmd_output = compile_pdf
           if compile_pdf_successfull?
             compile_pdf # again
             copy_pdf_file_to_dest_dir
           else
             puts latex_cmd_output
-            raise "Error while running: `#{latex_cmd}`"
+            raise "Error while running: `#{compile_cmd}`"
           end
         end
         
@@ -31,18 +29,22 @@ module Texas
         end
         
         def copy_pdf_file_to_dest_dir
-          tmp_file = File.join(build_path, "#{File.basename(master_file, '.tex')}.pdf")
+          basename = File.basename(build.master_file, '.tex')
+          tmp_file = File.join(build_path, "#{basename}.pdf")
           FileUtils.mkdir_p File.dirname(dest_file)
           FileUtils.copy tmp_file, dest_file
           verbose { verbose_info }
         end
         
-        def latex_cmd
-          "pdflatex -halt-on-error #{File.basename(master_file)}"
+        def compile_cmd
+          @compile_cmd ||= begin
+            cmd = build.config.script(:compile) || DEFAULT_COMPILE_CMD
+            eval('"'+cmd.gsub(/([^\\])(\")/, '\1\"')+'"')
+          end
         end
 
         def compile_pdf
-          run_in(build_path) { `#{latex_cmd}` }
+          run_in(build_path) { `#{compile_cmd}` }
         end
         
         def run_in(path)
