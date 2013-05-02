@@ -5,11 +5,7 @@ module Texas
         DEFAULT_OPEN_CMD = "evince"
 
         def cmd
-          @cmd ||= scripts && scripts['open']
-        end
-
-        def scripts
-          build.config['script']
+          @cmd ||= build.config.script(:open)
         end
 
         def run

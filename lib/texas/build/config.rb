@@ -23,6 +23,11 @@ module Texas
         self[m] || super
       end
 
+      def script(key)
+        hash = self[:script] || {}
+        hash[key.to_s]
+      end
+
       def self.create(filename, merge_key = nil)
         hash = File.exist?(filename) ? YAML.load_file(filename) : {}
         config = self.new hash
