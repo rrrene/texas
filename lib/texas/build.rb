@@ -10,6 +10,7 @@ require_relative 'build/dry'
 require_relative 'build/final'
 
 require_relative 'build/task/base'
+require_relative 'build/task/script'
 
 all_rbs = Dir[ File.join( File.dirname(__FILE__), "build", "task", "*.rb" ) ]
 all_rbs.each do |t|

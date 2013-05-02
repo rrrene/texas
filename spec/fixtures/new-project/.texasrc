@@ -1,3 +1,28 @@
+# Texas config file
+# =================
+
+# You can execute commands before and after the PDF is compiled,
+# and alter the commands executed by Texas to compile and open the
+# generated PDF:
+#
+# script:
+#   before: "# this run before anything else"
+#   compile: 'pdflatex -halt-on-error "#{File.basename(build.master_file)}"'
+#   after: "# this is run after the pdf compilation"
+#   open: 'evince "#{build.dest_file}"'
+#
+
+# The document hash is intended to store information relevant to your
+# templates:
 document:
   author: "Your Name"
   title: "Document Title"
+#
+# You can add anything you want here, like
+#
+# status: Draft
+# 
+# and then access it in your templates via
+#
+#   <%= document.status %>
+#

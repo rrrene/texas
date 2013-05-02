@@ -1,7 +1,7 @@
 module Texas
   module Build
     module Task
-      class RunBeforeScripts < Script
+      class ExecuteBeforeScripts < Script
         def cmd
           cmd_from_config :before
         end
