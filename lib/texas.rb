@@ -9,6 +9,7 @@ Texas.contents_subdir_name = "contents"
 
 require 'pp'
 
+require_relative 'texas/output_helper'
 require_relative 'texas/option_parser'
 require_relative 'texas/build'
 require_relative 'texas/core_ext'

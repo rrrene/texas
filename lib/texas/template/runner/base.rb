@@ -4,6 +4,7 @@ require 'erb'
 
 module Texas
   class Template::Runner::Base
+    include Texas::OutputHelper
     include Texas::Template::Helper::Base
     include Texas::Template::Helper::Info
 

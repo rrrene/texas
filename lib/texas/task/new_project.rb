@@ -18,7 +18,7 @@ module Texas
           if Dir[File.join(dest_dir, "*")].empty?
             FileUtils.rm_r dest_dir
           else
-            warn "texas: directory is not empty: #{dest_dir}"
+            trace "texas: directory is not empty: #{dest_dir}"
             exit 1
           end
         end

@@ -5,6 +5,7 @@ require 'pathname'
 
 module Texas
   class OptionParser
+    include Texas::OutputHelper
     attr_reader :args, :options
 
     def initialize(args)
@@ -35,7 +36,7 @@ module Texas
     end
 
     def kill(msg)
-      warn "texas: #{msg}\nTry `texas --help' for more information."
+      trace "texas: #{msg}\nTry `texas --help' for more information."
       exit 1
     end
 

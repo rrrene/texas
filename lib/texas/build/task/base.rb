@@ -2,6 +2,7 @@ module Texas
   module Build
     module Task
       class Base
+        include Texas::OutputHelper
         attr_reader :build
         
         def initialize(_build = nil)

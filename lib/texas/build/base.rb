@@ -3,6 +3,7 @@ require 'yaml'
 module Texas
   module Build
     class Base
+      include Texas::OutputHelper
       CONFIG_FILE = ".texasrc"
       MASTER_TEMPLATE = "master.tex"
 

@@ -6,6 +6,13 @@ require 'rspec'
 require 'fileutils'
 
 require 'texas'
+module Texas
+  module OutputHelper
+    def trace(*args)
+      # void
+    end
+  end
+end
 
 def default_options
   {:open_pdf => false, :warnings => false}
