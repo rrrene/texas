@@ -6,23 +6,13 @@ module Texas
 
     def verbose(&block)
       if Texas.verbose
-        value = block.()
-        if value.is_a?(String)
-          trace value
-        else
-          pp value
-        end
+        trace block.()
       end
     end
 
     def warning(&block)
       if Texas.warnings
-        value = block.()
-        if value.is_a?(String)
-          trace "[WARNING]".yellow + " #{value}"
-        else
-          pp value
-        end
+        trace "[WARNING]".yellow + " #{block.()}"
       end
     end
   end
