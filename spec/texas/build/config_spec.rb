@@ -56,21 +56,14 @@ describe Texas::Build::Config do
 
   describe "#create" do
     it "takes a filename" do
-      config = Texas::Build::Config.create(texasrc_filename)
+      config = Texas::Build::Config.create({:document => {:some_value => 42}})
       config.document.should_not be_nil
       config.document.some_value.should == 42
       config.document.some_other_value.should be_nil
     end
 
-    it "takes a filename, but defaults if file not present" do
-      config = Texas::Build::Config.create(texasrc_filename+"-not-present")
-      config.document.should_not be_nil
-      config.document.some_value.should be_nil
-      config.document.some_other_value.should be_nil
-    end
-
     it "takes a filename and a merge key" do
-      config = Texas::Build::Config.create(texasrc_filename, "other_mode")
+      config = Texas::Build::Config.create({:document => {:some_value => 42}, :other_mode => {:document => {:some_value => 24, :some_other_value => 42}}}, "other_mode")
       config.document.should_not be_nil
       config.document.some_value.should == 24
       config.document.some_other_value.should be_true

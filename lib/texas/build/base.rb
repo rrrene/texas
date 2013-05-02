@@ -35,7 +35,25 @@ module Texas
       end
 
       def config
-        @config ||= Config.create File.join(root, CONFIG_FILE), options.merge_config
+        @config ||= begin
+          hash = {}
+          all_config_files.each do |filename|
+            hash.deep_merge! YAML.load_file(filename) 
+          end
+          Config.create hash, options.merge_config
+        end
+      end
+
+      def all_config_files(dir = root)
+        found_files = []
+        old_length = nil
+        while dir != '.' && dir.length != old_length
+          filename = File.join(dir, CONFIG_FILE)
+          found_files.unshift filename if File.exist?(filename)
+          old_length = dir.length
+          dir = File.dirname(dir)
+        end
+        found_files
       end
 
       def dest_file

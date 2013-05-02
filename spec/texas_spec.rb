@@ -5,7 +5,6 @@ def pandoc_present?
   !where.empty?
 end
 
-
 describe Texas::Runner do
   describe "#initialize" do
 
@@ -34,7 +33,24 @@ describe Texas::Runner do
     end
 
     it "run scenario for .texasrc" do
-      run_scenario "texasrc"
+      run_scenario "texasrc" do |runner|
+        build = runner.task_instance
+        config = build.config
+        lambda {
+          config.some_other_value_from_parent_dir_config.should be_true
+        }.should raise_error
+      end
+    end
+
+    it "run scenario for .texasrc with a parent .texasrc" do
+      other_config_file = File.join(test_data_dir(""), ".texasrc")
+      FileUtils.cp File.join(test_data_dir("texasrc"), ".other.texasrc"), other_config_file
+      run_scenario "texasrc" do |runner|
+        FileUtils.rm other_config_file # remove parent .texasrc
+        build = runner.task_instance
+        config = build.config
+        config.document.some_other_value_from_parent_dir_config.should be_true
+      end
     end
 
     it "run scenario for .texasrc with --merge-config and fail" do
