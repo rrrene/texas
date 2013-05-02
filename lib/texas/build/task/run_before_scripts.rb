@@ -1,20 +1,13 @@
 module Texas
   module Build
     module Task
-      class RunBeforeScripts < Base
+      class RunBeforeScripts < Script
         def cmd
-          @cmd ||= scripts && scripts['before']
-        end
-
-        def scripts
-          build.config['script']
+          cmd_from_config :before
         end
 
         def run
-          if cmd
-            verbose { "\n[i] Running before script:\n\n    #{cmd.cyan}\n\n" }
-            system cmd
-          end
+          execute cmd if cmd
         end
       end
     end
