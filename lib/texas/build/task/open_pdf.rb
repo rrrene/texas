@@ -13,7 +13,7 @@ module Texas
           if open_pdf_cmd
             system "#{open_pdf_cmd} #{build.dest_file}"
           else
-            puts "Can't open PDF: no default command recognized. Specify in #{Build::Base::CONFIG_FILE}"
+            trace "Can't open PDF: no default command recognized. Specify in #{Build::Base::CONFIG_FILE}"
           end
         end
 

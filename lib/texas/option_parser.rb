@@ -135,13 +135,13 @@ module Texas
       # No argument, shows at tail.  This will print an options summary.
       # Try it and see!
       parser.on_tail("-h", "--help", "Show this message") do
-        puts parser
+        trace parser
         exit
       end
 
       # Another typical switch to print the version.
       parser.on_tail("--version", "Show version") do
-        puts Texas::VERSION::STRING
+        trace Texas::VERSION::STRING
         exit
       end
     end

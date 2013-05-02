@@ -5,7 +5,7 @@ class Texas::Template::Runner::Markdown < Texas::Template::Runner::Base
 
   def after_write
     if `which pandoc`.empty?
-      puts "\nAborting build: pandoc not found in PATH (required for Markdown rendering)"
+      trace "\nAborting build: pandoc not found in PATH (required for Markdown rendering)"
       exit
     end
     tex_filename = Texas::Template.basename(@output_filename) + ".tex"

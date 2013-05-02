@@ -1,8 +1,12 @@
+def trace(*args)
+  puts *args
+end
+
 def verbose(&block)
   if Texas.verbose
     value = block.()
     if value.is_a?(String)
-      puts value
+      trace value
     else
       pp value
     end
@@ -13,7 +17,7 @@ def warning(&block)
   if Texas.warnings
     value = block.()
     if value.is_a?(String)
-      puts "[WARNING]".yellow + " #{value}"
+      trace "[WARNING]".yellow + " #{value}"
     else
       pp value
     end
@@ -37,12 +41,12 @@ module Texas
     # Display the error message that caused the exception.
     #
     def display_error_message(ex)
-      puts "#{@options.task} aborted!"
-      puts ex.message
+      trace "#{@options.task} aborted!"
+      trace ex.message
       if @options.backtrace
-        puts ex.backtrace
+        trace ex.backtrace
       else
-        puts "(See full trace with --backtrace)"
+        trace "(See full trace with --backtrace)"
       end
     end
 
@@ -92,7 +96,7 @@ module Texas
       begin
         eval("::Texas::Task::#{class_name}")
       rescue
-        puts "Failed to fallback for Texas::Task::#{class_name}"
+        trace "Failed to fallback for Texas::Task::#{class_name}"
         exit
       end
     end

@@ -28,10 +28,10 @@ module Texas
         started_at = Time.now.to_i
         Build::Final.new(run_options).run
         finished_at = Time.now.to_i
-        puts (finished_at - started_at).to_s + " seconds to rebuild"
+        trace (finished_at - started_at).to_s + " seconds to rebuild"
       rescue Exception => e
-        puts @build.current_template.filename
-        puts "[ERROR] while building \n#{e}"
+        trace @build.current_template.filename
+        trace "[ERROR] while building \n#{e}"
       end
 
     end

@@ -19,7 +19,7 @@ module Texas
             compile_pdf # again
             copy_pdf_file_to_dest_dir
           else
-            puts latex_cmd_output
+            trace latex_cmd_output
             raise "Error while running: `#{compile_cmd}`"
           end
         end
