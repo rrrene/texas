@@ -2,7 +2,7 @@ module Texas
   module Build
     module Task
       class PublishPDF < Script
-        DEFAULT_COMPILE_CMD = 'pdflatex -halt-on-error "#{File.basename(build.master_file)}"'
+        DEFAULT_COMPILE_CMD = 'pdflatex -halt-on-error "<%= File.basename(build.master_file) %>"'
 
         def build_path
           build.__path__

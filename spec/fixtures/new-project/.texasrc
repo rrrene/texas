@@ -7,9 +7,9 @@
 #
 # script:
 #   before: "# this run before anything else"
-#   compile: 'pdflatex -halt-on-error "#{File.basename(build.master_file)}"'
+#   compile: 'pdflatex -halt-on-error "<%= File.basename(build.master_file) %>"'
 #   after: "# this is run after the pdf compilation"
-#   open: 'evince "#{build.dest_file}"'
+#   open: 'evince "<%= build.dest_file %>"'
 #
 
 # The document hash is intended to store information relevant to your

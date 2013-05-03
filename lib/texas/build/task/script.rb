@@ -5,7 +5,7 @@ module Texas
         
         def cmd_from_config(key, default_value = nil)
           if cmd = build.config.script(key) || default_value
-            eval('"'+cmd.gsub(/([^\\])(\")/, '\1\"')+'"')
+            ERB.new(cmd).result(binding)
           end
         end
 
