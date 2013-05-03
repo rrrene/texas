@@ -19,12 +19,7 @@ module Texas
         include Texas::OutputHelper
 
         def directories_to_watch
-          arr = []
-          arr << "tex"      if Dir.exists?("tex")
-          arr << "contents" if Dir.exists?("contents")
-          arr << "figures"  if Dir.exists?("figures")
-          arr << Texas.texas_dir
-          arr
+          [Texas.contents_subdir_name, Texas.texas_dir]
         end
 
         def rebuild
