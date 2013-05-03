@@ -12,18 +12,6 @@ module Texas
       @task_instance = task_class.new(@options)
       run
     end
-    
-    # Display the error message that caused the exception.
-    #
-    def display_error_message(ex)
-      trace "#{@options.task} aborted!"
-      trace ex.message
-      if @options.backtrace
-        trace ex.backtrace
-      else
-        trace "(See full trace with --backtrace)"
-      end
-    end
 
     # Extends String with Term::ANSIColor if options demand it.
     #
@@ -50,10 +38,7 @@ module Texas
     end
 
     def run
-      @task_instance.run
-    rescue Exception => ex
-      display_error_message ex
-      exit 1
+      Build.run_with_nice_errors(@task_instance) { exit 1 }
     end
 
     # Returns the class for the given task.

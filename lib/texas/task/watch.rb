@@ -24,12 +24,9 @@ module Texas
 
         def rebuild
           started_at = Time.now.to_i
-          Build::Final.new(run_options).run
+          Build.run_with_nice_errors Build::Final.new(run_options)
           finished_at = Time.now.to_i
           trace (finished_at - started_at).to_s + " seconds to rebuild"
-        rescue Exception => e
-          trace @build.current_template.filename
-          trace "[ERROR] while building \n#{e}"
         end
       end
     end

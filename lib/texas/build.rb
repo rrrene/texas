@@ -1,5 +1,27 @@
 module Texas
   module Build
+    class << self
+      include Texas::OutputHelper
+
+      # Display the error message that caused the exception.
+      #
+      def display_error_message(build, ex)
+        trace "#{build.options.task} aborted!"
+        trace ex.message
+        if build.options.backtrace
+          trace ex.backtrace
+        else
+          trace "(See full trace with --backtrace)"
+        end
+      end
+
+      def run_with_nice_errors(build, &block)
+        build.run
+      rescue Exception => ex
+        display_error_message(build, ex)
+        block.() if block
+      end
+    end
   end
 end
 
