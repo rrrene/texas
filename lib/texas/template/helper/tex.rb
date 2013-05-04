@@ -50,8 +50,6 @@ module Texas
           template.write
         end
 
-        private
-
         # Returns a path relative to the build_path
         #
         # Example:
