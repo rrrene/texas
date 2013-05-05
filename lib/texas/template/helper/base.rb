@@ -61,7 +61,7 @@ module Texas
         end
 
         def filename_for_find(parts, base, ext = nil)
-          path = parts.map(&:to_s).map(&:dup)
+          path = [parts].flatten.map(&:to_s).map(&:dup)
           path.unshift base.to_s
           path.last << ".#{ext}" unless ext.empty?
           File.join(*path)
