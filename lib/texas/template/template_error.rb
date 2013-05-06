@@ -5,6 +5,11 @@ class TemplateError < StandardError
     super(message)
     self.template = template
     self.original = original
+    parse_backtrace_for_origin
+  end
+
+  def backtrace
+    original ? original.backtrace : backtrace
   end
 
   def filename
@@ -12,9 +17,10 @@ class TemplateError < StandardError
   end
 
   def parse_backtrace_for_origin
-    arr = original ? original.backtrace : backtrace
+    arr = backtrace
     arr.each_with_index do |line, index| 
       if line =~ /\(erb\):(\d+)/ 
+        @pre_erb_backtrace = arr[0...index]
         @line_number = $1.to_i
         line_before = backtrace[index-1]
         @method_name = line_before =~ /\d+:in\s+`([^\)]+)'/ && $1
@@ -24,11 +30,17 @@ class TemplateError < StandardError
   end
 
   def origin
-    parse_backtrace_for_origin
-    "#{filename}:#{@line_number}:in `#{@method_name}'"
+    "#{filename}:#{@line_number}"
+  end
+
+  def pre_erb_backtrace
+    arr = @pre_erb_backtrace.map do |line| 
+      line.gsub(template.build.root, '.')
+    end
+    str = arr.empty? ? "" : arr.join("\n").dark + "\n"
   end
 
   def message
-    super + "\n#{origin}".cyan
+    super + "\n" + pre_erb_backtrace + origin.cyan
   end
 end
