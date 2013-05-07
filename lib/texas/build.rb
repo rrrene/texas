@@ -21,7 +21,7 @@ module Texas
         trace "\n"
         trace TraceInfo.new("interrupt", "#{build.options.task} interrupted!", :yellow)
         exit 0
-      rescue Exception => ex
+      rescue StandardError => ex
         display_error_message(build, ex)
         block.() if block
       end

@@ -49,7 +49,7 @@ module Texas
       ERB.new(@content, nil, nil, "@erbout").result(binding)
     rescue TemplateError => ex
       raise ex
-    rescue Exception => ex
+    rescue StandardError => ex
       raise TemplateError.new(self, ex.message, ex)
     end
 
