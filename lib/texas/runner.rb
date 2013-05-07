@@ -14,11 +14,11 @@ module Texas
       run
     end
 
-    # Extends String with Term::ANSIColor if options demand it.
+    # Extends String with Term::ANSIColor.
     #
     def extend_string_class
-      mod = @options.colors ? Term::ANSIColor : Term::NoColor
-      String.send :include, mod
+      String.send(:include, Term::ANSIColor)
+      Term::ANSIColor::coloring = @options.colors
     end
 
     # Load lib/init.rb if present in current project.
