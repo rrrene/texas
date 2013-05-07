@@ -47,8 +47,8 @@ module Texas
       end
 
       def run_build_task(klass)
+        verbose { TraceInfo.new(:build_task, klass, :green) }
         klass = eval("::Texas::Build::Task::#{klass}") if [Symbol, String].include?(klass.class)
-        verbose { "[b] #{klass}".dark }
         klass.new(self).run
       end
 
@@ -58,11 +58,8 @@ module Texas
 
       def verbose_info
         [
-          "Starting #{self.class}",
-          "[i] work_dir: #{options.work_dir}".dark,
-          "[i] contents_dir: #{@contents_dir}".dark,
-          "[i] contents_template: #{@contents_template}".dark,
-          "[i] build_path: #{__path__}".dark
+          TraceInfo.new("work_dir", options.work_dir, :dark),
+          TraceInfo.new("build_path", __path__, :dark),
         ].join("\n")
       end
 

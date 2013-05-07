@@ -6,8 +6,8 @@ module Texas
       # Display the error message that caused the exception.
       #
       def display_error_message(build, ex)
-        trace "#{build.options.task} aborted!"
-        trace ex.message
+        trace TraceInfo.new(:error, "#{build.options.task} aborted!", :red)
+        trace "\n" + ex.message
         if build.options.backtrace
           trace ex.backtrace
         else

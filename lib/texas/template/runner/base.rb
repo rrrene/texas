@@ -54,7 +54,7 @@ module Texas
     end
 
     def __run__(locals = {})
-      verbose { "[T] #{filename.gsub(build_path, '')}".dark }
+      verbose { TraceInfo.new(:template, filename.gsub(build_path, ''), :dark) }
 
       old_current_template = build.current_template
       build.current_template = self

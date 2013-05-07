@@ -9,6 +9,7 @@ module Texas
       Texas.verbose = @options.verbose
       Texas.warnings = @options.warnings
       load_local_libs if @options.load_local_libs
+      verbose { TraceInfo.new(:starting, task_class, :magenta) }
       @task_instance = task_class.new(@options)
       run
     end

@@ -26,8 +26,9 @@ module Texas
           started_at = Time.now.to_i
           Build.run_with_nice_errors Build::Final.new(run_options)
           finished_at = Time.now.to_i
-          trace (finished_at - started_at).to_s + " seconds to rebuild"
-        end
+          time = finished_at - started_at
+          trace TraceInfo.new(:rebuild, "in #{time} seconds", :green)
+        end 
       end
     end
   end

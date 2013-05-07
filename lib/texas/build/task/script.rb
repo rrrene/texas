@@ -10,7 +10,7 @@ module Texas
         end
 
         def execute(cmd)
-          verbose { "[i] Running: `#{cmd.cyan}`" }
+          verbose { TraceInfo.new(:run, "`#{cmd}`", :cyan) }
           execute_in(build.__path__) { `#{cmd}` }
         end
 
