@@ -15,8 +15,13 @@ module Texas
 
       def merge!(key)
         @document = nil
-        @hash.deep_merge! @hash[key.to_s].stringify_keys
-        self
+        merge_hash = @hash[key.to_s]
+        if merge_hash
+          @hash.deep_merge! merge_hash.stringify_keys
+          self
+        else
+          raise "Trying to merge config with none existing key #{key.inspect}"
+        end
       end
 
       def method_missing(m, *args, &block)
