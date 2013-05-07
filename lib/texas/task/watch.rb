@@ -18,8 +18,23 @@ module Texas
       class << self
         include Texas::OutputHelper
 
+        # Returns the directories watched by default.
+        #
+        def default_directories
+          [Texas.contents_subdir_name, "lib/", Texas.texas_dir]
+        end
+
+        # Returns the directories watched, which can be extended.
+        #
+        # Example:
+        #   Texas::Task::Watch.directories << "images/"
+        #   
+        def directories
+          @@directories ||= default_directories
+        end
+
         def directories_to_watch
-          [Texas.contents_subdir_name, Texas.texas_dir]
+          directories.uniq
         end
 
         def rebuild
