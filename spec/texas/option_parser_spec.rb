@@ -12,6 +12,22 @@ describe Texas::OptionParser do
       op = Texas::OptionParser.new(%w(-d))
       lambda { op.parse }.should raise_error SystemExit
     end
+
+    it "should identify the right contents_dir and contents_template options" do
+      use_scenario "basic-tex"
+
+      options = Texas::OptionParser.new(%w()).parse
+      options.contents_dir.should == "contents"
+      options.contents_template.should == "contents"
+
+      options = Texas::OptionParser.new(%w(contents/input_template)).parse
+      options.contents_dir.should == "contents"
+      options.contents_template.should == "input_template"
+
+      options = Texas::OptionParser.new(%w(contents/sub_dir/unused_template)).parse
+      options.contents_dir.should == "contents"
+      options.contents_template.should == "sub_dir/unused_template"
+    end
   end
 
   describe ".parse_additional_options" do

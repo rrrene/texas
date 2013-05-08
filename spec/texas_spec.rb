@@ -9,15 +9,19 @@ describe Texas::Runner do
   describe "#initialize" do
 
     it "run basic tex scenario" do
-      run_scenario "basic-tex", %w(-d)
+      run_scenario "basic-tex"
     end
 
     it "run basic tex scenario with some arguments" do
+      run_scenario "basic-tex", %w(-d -v)
+    end
+
+    it "run basic tex scenario with another contents_template" do
       run_scenario "basic-tex", %w(-d contents/input_template)
     end
 
-    it "run basic tex scenario" do
-      run_scenario "basic-tex"
+    it "run basic tex scenario with another subdir contents_template" do
+      run_scenario "basic-tex", %w(-d contents/sub_dir/unused_template)
     end
 
     it "run basic markdown scenario", :if => pandoc_present? do

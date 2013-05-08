@@ -59,10 +59,10 @@ module Texas
     end
 
     def find_contents_dir(file)
-      if Dir["#{file}*"].empty?
-        nil
+      if file =~ /#{Texas.contents_subdir_name}/
+        Texas.contents_subdir_name
       else
-        File.dirname(file)
+        nil
       end
     end
 

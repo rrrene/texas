@@ -50,7 +50,7 @@ describe Texas::Build::Base do
       filenames = test_build.ran_templates.map(&:filename)
       basenames = filenames.map { |f| f.gsub(test_build.__path__+'/', '') }
       basenames.size.should > 0
-      basenames.include?("unused_template.tex.erb").should == false
+      basenames.include?("sub_dir/unused_template.tex.erb").should == false
     end
   end
 
