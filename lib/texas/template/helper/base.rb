@@ -19,10 +19,26 @@ module Texas
         # Returns a subdir with the current template's basename
         #
         # Example:
-        # In /example/introduction.tex.erb this method 
-        # returns "/example/introduction" if that directory exists
-        # and nil if it doesn't.
+        #   # Given the following contents directory:
+        #   #
+        #   # contents/
+        #   #   section-1/
+        #   #     subsection-1-1.tex.erb
+        #   #   contents.tex.erb
+        #   #   section-1.tex-erb
+        #   #   section-2.tex-erb
+        #   #
         #
+        #   # section-1.tex.erb
+        #
+        #   <%= path_with_templates_basename %>
+        #   # => "section-1"
+        #   
+        #   # section-2.tex.erb
+        #
+        #   <%= path_with_templates_basename %>
+        #   # => nil
+        #   
         def path_with_templates_basename
           subdir = Template.basename @output_filename
           File.directory?(subdir) ? subdir : nil
@@ -69,11 +85,25 @@ module Texas
 
         # Renders a partial with the given locals.
         #
+        # Example:
+        #   <%= partial :some_partial, :some_value => 42 %>
+        #   
         def partial(name, locals = {})
           render("_#{name}", locals)
         end
 
         # Renders one or more templates with the given locals.
+        #
+        # Example:
+        #   <%= render :template => "some_template" %>
+        #   
+        #   # or by shorthand:
+        #   
+        #   <%= render :some_template %>
+        #
+        #   # or render multiple templates with a single call:
+        #   
+        #   <%= render %w(some_template some_other_template) %>
         #
         def render(options, locals = {})
           if [String, Symbol].include?(options.class)
@@ -98,12 +128,30 @@ module Texas
 
         # Returns all extensions the Template::Runner can handle.
         #
+        # Example:
+        #   template_extensions
+        #   # => ["tex", "tex.erb", "md", "md.erb"]
+        #   
         def template_extensions
           Texas::Template.known_extensions
         end
 
         # Returns all templates in the current template's path matching the given glob
         #
+        # Example:
+        #   # Given the following contents directory:
+        #   #
+        #   # contents/
+        #   #   _some_partial.tex.erb
+        #   #   contents.tex.erb
+        #   #   other_latex.tex
+        #   #   other_markdown.md.erb
+        #   #   some_template.tex.erb
+        #   #
+        #
+        #   templates_by_glob("*.tex.erb")
+        #   # => ["_some_partial", "contents", "other_markdown", "some_template"]
+        #   
         def templates_by_glob(glob = "*") 
           files = Dir[File.join(__path__, glob)]
           templates = files.map do |f| 

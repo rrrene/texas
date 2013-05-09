@@ -1,11 +1,39 @@
 module Texas
   module Build
+    # This class looks for a given filename in the current and all parent directories.
+    #
+    #   # Given the following directory structure:
+    #
+    #   ~/
+    #     projects/
+    #       some_texas_project/
+    #         .texasrc
+    #     .texasrc
+    #
+    # In the above case, it would find and load 
+    # ~/.texasrc and ~/projects/some_texas_project/.texasrc
+    # with the latter one overriding settings in the former one.
+    #
     class ConfigLoader
       def initialize(start_dir, filename)
         @start_dir = start_dir
         @filename = filename
       end
 
+      # Returns all found files with the given filename in the current and all parent directories.
+      #
+      # Example:
+      #   # Given the following directory structure:
+      #
+      #   ~/
+      #     projects/
+      #       some_texas_project/
+      #         .texasrc
+      #     .texasrc
+      #
+      #   all_config_files
+      #   # => ["~/.texasrc", "~/projects/some_texas_project/.texasrc"]
+      #
       def all_config_files
         found_files = []
         each_parent_dir(@start_dir) do |dir|
@@ -24,6 +52,35 @@ module Texas
         end
       end
 
+      # Returns a hash of all the found config files.
+      #
+      # Example:
+      #   # Given the following directory structure:
+      #
+      #   ~/
+      #     projects/
+      #       some_texas_project/
+      #         .texasrc
+      #     .texasrc
+      #
+      #   # ~/.texasrc
+      #   
+      #   document:
+      #     author: "John Doe"
+      #     some_value: 42
+      #
+      #   # ~/projects/some_texas_project/.texasrc
+      #   
+      #   document:
+      #     title: "My Document"
+      #     some_value: 123
+      #
+      #   to_hash
+      #   # => {:document => {
+      #          :author => "John Doe", 
+      #          :title => "My Document", 
+      #          :some_value => 123}}
+      #          
       def to_hash
         hash = {}
         all_config_files.each do |filename|

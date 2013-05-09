@@ -1,8 +1,20 @@
 module Texas
+  # An instance of Texas::Runner is used to run a build process.
+  #
   class Runner
     include Texas::OutputHelper
+
+    # Returns the instance of the performed task. 
+    # Normally a Texas::Build::Base derived object.
+    #
     attr_reader :task_instance
 
+    # Initializes the Runner with an array or hash of options.
+    #
+    # Example:
+    #   Texas::Runner.new(%w(-w --no-color))
+    #   Texas::Runner.new(:warnings => true, :colors => false)
+    #
     def initialize(args = nil)
       @options = options_from_args args
       extend_string_class

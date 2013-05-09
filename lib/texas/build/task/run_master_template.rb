@@ -1,6 +1,8 @@
 module Texas
   module Build
     module Task
+      # This build task finds and runs the master template.
+      #
       class RunMasterTemplate < Base
 
         def find_master_template(possible_templates)

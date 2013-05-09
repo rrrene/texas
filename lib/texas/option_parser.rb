@@ -13,7 +13,7 @@ module Texas
       @options = OpenStruct.new
     end
 
-    # Return a structure describing the options.
+    # Returns a structure describing the options.
     #
     def parse
       set_default_options
@@ -26,6 +26,8 @@ module Texas
 
     private
 
+    # Kills the program if any mandatory options are missing.
+    #
     def check_mandatory!
       if options.work_dir.nil?
         kill "missing file operand"
@@ -35,6 +37,8 @@ module Texas
       end
     end
 
+    # Displays an error message and exits the program afterwards.
+    #
     def kill(msg)
       trace "texas: #{msg}\nTry `texas --help' for more information."
       exit 1

@@ -15,6 +15,9 @@ module Texas
         end
       end
 
+      # Run the given build object. If any errors occur, display them in a
+      # formatted way and call the optional block, if present.
+      #
       def run_with_nice_errors(build, &block)
         build.run
       rescue Interrupt => ex

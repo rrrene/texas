@@ -1,15 +1,30 @@
 module Texas
+  # The OutputHelper module provides helper methods to output information
+  # to STDOUT.
   module OutputHelper
+
+    # Puts the given arguments
+    #
     def trace(*args)
       puts *args
     end
 
+    # Traces the result of the given block if Texas is running in verbose mode
+    #
+    # Example:
+    #   verbose { "Debug information: " + some_expensive_lookup.to_s }
+    #
     def verbose(&block)
       if Texas.verbose
         trace block.()
       end
     end
 
+    # Traces the result of the given block if warnings are enabled
+    #
+    # Example:
+    #   warning { "This might cause problems: " + something.to_s }
+    #
     def warning(&block)
       if Texas.warnings
         trace TraceInfo.new("WARNING", block.().to_s, :yellow)

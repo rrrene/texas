@@ -1,7 +1,11 @@
 module Texas
   module Template
     class << self
-      attr_accessor :handlers, :known_extensions
+      # Returns a map of file extensions to handlers
+      attr_accessor :handlers
+
+      # Returns all known template extensions
+      attr_accessor :known_extensions
 
       # Returns a template handler for the given filename
       #
@@ -49,7 +53,7 @@ module Texas
       #
       # Example:
       #   Template.create("some_file.tex.erb", build)
-      #   # => #<Template::Runner::TeX ...>
+      #   # => #<Texas::Template::Runner::TeX ...>
       #
       def create(filename, build)
         handler(filename).new(filename, build)

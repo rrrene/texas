@@ -1,6 +1,10 @@
 module Texas
   module Build
     module Task
+      # This build task copies those templates from Texas' own template 
+      # directory that are still missing in the current project's build 
+      # directory (e.g. the preambel partial)
+      #
       class AddDefaultTemplatesToBuildPath < Base
         def build_path
           build.__path__

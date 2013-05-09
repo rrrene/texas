@@ -7,9 +7,25 @@ module Texas
       CONFIG_FILE = ".texasrc"
       MASTER_TEMPLATE = "master.tex"
 
-      attr_reader :root, :options
-      attr_reader :master_file, :contents_dir, :contents_template
-      attr_reader :current_template, :ran_templates
+      # Returns the path of the current Texas project
+      attr_reader :root
+
+      # Returns the options of this build.
+      attr_reader :options
+
+      # Returns the location of the template that is run.
+      attr_reader :master_file
+
+      attr_reader :contents_dir
+
+      # Returns the name of the template whose contents should be rendered.
+      attr_reader :contents_template
+
+      # Returns the name of the template currently rendered.
+      attr_reader :current_template
+
+      # Returns an array of all templates that have been rendered.
+      attr_reader :ran_templates
 
       def initialize(_options)
         @options = _options
@@ -20,38 +36,55 @@ module Texas
         verbose { verbose_info }
       end
 
+      # Returns the full path of the directory where the build is happening.
+      #
       def __path__
         File.join(root, 'tmp', 'build')
       end
 
+      # Returns an object that can store persistent information throughout
+      # the build process.
+      #
       def store
         @store ||= OpenStruct.new
       end
 
+      # Sets the currently rendered template.
+      #
       def current_template=(t)
         @ran_templates ||= []
         @ran_templates << t unless t.nil?
         @current_template = t
       end
 
+      # Returns the Config object.
+      #
       def config
         @config ||= Config.create ConfigLoader.new(root, CONFIG_FILE).to_hash, options.merge_config
       end
 
+      # Returns the location where the generated PDF file should be after the build.
+      #
       def dest_file
         @dest_file ||= File.join(root, "bin", "#{Template.basename contents_template}.pdf")
       end
 
+      # Runs the given build tasks.
+      #
       def run_build_tasks(*tasks)
         tasks.flatten.each { |t| run_build_task t }
       end
 
+      # Runs the given build task.
+      #
       def run_build_task(klass)
         verbose { TraceInfo.new(:build_task, klass, :green) }
         klass = eval("::Texas::Build::Task::#{klass}") if [Symbol, String].include?(klass.class)
         klass.new(self).run
       end
 
+      # Executes the build process.
+      #
       def run
         run_build_tasks before_tasks, basic_tasks, after_tasks
       end

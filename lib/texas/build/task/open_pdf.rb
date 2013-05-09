@@ -1,6 +1,8 @@
 module Texas
   module Build
     module Task
+      # This build task opens the generated PDF file.
+      #
       class OpenPDF < Script
         DEFAULT_OPEN_CMD = 'evince "<%= build.dest_file %>"'
 

@@ -4,3 +4,4 @@ tmp
 pkg
 .ruby-version
 .ruby-gemset
+.yardoc

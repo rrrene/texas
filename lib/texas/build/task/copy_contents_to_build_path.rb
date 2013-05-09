@@ -1,6 +1,9 @@
 module Texas
   module Build
     module Task
+      # This build task copies all the templates in the current project's
+      # contents directory to the build directory.
+      #
       class CopyContentsToBuildPath < Base
         def run
           ensure_build_path_exists

@@ -1,7 +1,17 @@
 module Texas
   class << self
-    attr_accessor :contents_subdir_name, :texas_dir
-    attr_accessor :verbose, :warnings
+    # Returns the name of the template sub directory
+    # defaults to "contents"
+    attr_accessor :contents_subdir_name
+
+    # Points to the directory where Texas is located
+    attr_accessor :texas_dir
+
+    # Returns true if Texas is run in verbose mode
+    attr_accessor :verbose
+
+    # Returns true if warnings are enabled
+    attr_accessor :warnings
   end
 end
 Texas.texas_dir = File.join(File.dirname(__FILE__), '..')

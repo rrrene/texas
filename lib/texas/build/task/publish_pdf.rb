@@ -1,6 +1,8 @@
 module Texas
   module Build
     module Task
+      # This build task compiles the generated *.tex files into a PDF.
+      #
       class PublishPDF < Script
         DEFAULT_COMPILE_CMD = 'pdflatex -halt-on-error "<%= File.basename(build.master_file) %>"'
 
