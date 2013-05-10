@@ -8,7 +8,7 @@ module Texas
       end
 
       def run
-        self.class.run_options = options
+        self.class.run_options = options.to_h.merge(:task => :build)
         dirs = Task::Watch.directories_to_watch
         Listen.to(*dirs) do |modified, added, removed|
           Task::Watch.rebuild
@@ -39,7 +39,7 @@ module Texas
 
         def rebuild
           started_at = Time.now.to_i
-          Build.run_with_nice_errors Build::Final.new(run_options)
+          Texas::Runner.new(run_options)
           finished_at = Time.now.to_i
           time = finished_at - started_at
           trace TraceInfo.new(:rebuild, "in #{time} seconds", :green)
