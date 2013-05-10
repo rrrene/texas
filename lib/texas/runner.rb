@@ -37,7 +37,7 @@ module Texas
     #
     def load_local_libs
       init_file = File.join(@options.work_dir, "lib", "init.rb")
-      require init_file if File.exist?(init_file)
+      load init_file if File.exist?(init_file)
     end
 
     def options_from_args(args)
