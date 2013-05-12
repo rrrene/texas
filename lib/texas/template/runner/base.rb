@@ -26,13 +26,6 @@ module Texas
       @output_filename = filename.gsub(/(\.erb)$/, '')
     end
 
-    # Shorthand to the build's root.
-    #
-    # TODO: Is this used?
-    def root
-      build.root
-    end
-
     # Shorthand to the build's __path__.
     #
     def build_path
