@@ -66,7 +66,7 @@ module Texas
       end
     end
 
-    def find_contents_file(file)
+    def find_contents_template(file)
       file = file.gsub("#{Texas.contents_subdir_name}/", "")
       glob = File.join(Texas.contents_subdir_name, "#{file}*")
       if Dir[glob].empty?
@@ -192,7 +192,7 @@ module Texas
       options.check_mandatory_arguments = true
       options.load_local_libs = true
       options.contents_dir = Texas.contents_subdir_name
-      options.contents_template = find_contents_file("contents")
+      options.contents_template = find_contents_template("contents")
       options.backtrace = false
       options.colors = true
       options.merge_config = nil
@@ -203,7 +203,7 @@ module Texas
 
     def set_contents_template_from_args
       f = args.shift
-      options.contents_template = find_contents_file(f)
+      options.contents_template = find_contents_template(f)
       options.contents_dir = find_contents_dir(f)
     end
 
