@@ -63,9 +63,15 @@ describe Texas::Runner do
       }.should raise_error
     end
 
-    it "run scenario for pdflatex-error and fail" do
+    it "run scenario for error-pdflatex and fail" do
       lambda {
-        run_scenario "pdflatex-error"
+        run_scenario "error-pdflatex"
+      }.should raise_error
+    end
+
+    it "run scenario for error-template-not-found and fail" do
+      lambda {
+        run_scenario "error-template-not-found"
       }.should raise_error
     end
 

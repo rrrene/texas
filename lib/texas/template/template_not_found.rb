@@ -1,0 +1,2 @@
+class TemplateNotFound < TemplateError
+end

@@ -30,6 +30,29 @@ describe Texas::Template::Runner::Base do
         found_location.should == image_file_location
       end
     end
+
+    it "should return nil if file can't be found" do
+      run_scenario "basic" do |runner|
+        build = runner.task_instance
+        work_dir = build.root
+        template = test_template(runner)
+
+        found_location = template.find_template_file([:something])
+        found_location.should be_nil
+      end
+    end
+
+    it "should raise TemplateNotFound if file can't be found" do
+      run_scenario "basic" do |runner|
+        build = runner.task_instance
+        work_dir = build.root
+        template = test_template(runner)
+
+        lambda {
+          template.find_template_file!([:something])
+        }.should raise_error(TemplateNotFound)
+      end
+    end
   end
 
 end
