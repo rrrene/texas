@@ -3,9 +3,11 @@ module Texas
     module Task
       class RewriteMarkedTemplates < Base
         def run
-          build.ran_templates.select { |t| t.marked_for_rewrite? }.each do |t|
-            t.write
-          end
+          templates.each { |t| t.write }
+        end
+
+        def templates
+          build.ran_templates.uniq.select { |t| t.marked_for_rewrite? }
         end
       end
     end
