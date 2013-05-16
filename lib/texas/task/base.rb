@@ -10,7 +10,11 @@ module Texas
       end
 
       def build(klass = Build::Dry)
-        @build ||= klass.new(options).run
+        @build ||= begin
+          b = klass.new(options)
+          b.run
+          b
+        end
       end
 
       def run
