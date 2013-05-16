@@ -58,7 +58,7 @@ module Texas
         #
         def find_template_file(parts, possible_exts = [], possible_paths = default_search_paths)
           possible_paths.each do |base|
-            ([""] + possible_exts).each do |ext|
+            (possible_exts + [""]).each do |ext|
               filename = filename_for_find(parts, base, ext)
               return filename if File.exist?(filename) && !File.directory?(filename)
             end

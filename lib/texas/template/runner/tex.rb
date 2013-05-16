@@ -8,4 +8,4 @@ class Texas::Template::Runner::TeX < Texas::Template::Runner::Base
   end
 end
 
-Texas::Template.register_handler %w(tex tex.erb), Texas::Template::Runner::TeX
+Texas::Template.register_handler %w(tex.erb tex), Texas::Template::Runner::TeX
