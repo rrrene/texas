@@ -87,6 +87,22 @@ module Texas
       raise TemplateError.new(self, ex.message, ex)
     end
 
+    def capture(*args)
+      value = nil
+      buffer = with_output_buffer { value = yield(*args) }
+    end
+
+    def with_output_buffer(buf = nil) #:nodoc:
+      unless buf
+        buf = String.new
+      end
+      @erbout, old_buffer = buf, @erbout
+      yield
+      @erbout
+    ensure
+      @erbout = old_buffer
+    end
+
     # Runs the template with the given local variables.
     #
     def __run__(locals = {})
