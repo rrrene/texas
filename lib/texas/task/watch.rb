@@ -34,7 +34,7 @@ module Texas
         end
 
         def directories_to_watch
-          directories.uniq
+          directories.uniq.select { |d| File.exists?(d) }
         end
 
         def rebuild
