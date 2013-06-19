@@ -30,7 +30,7 @@ At the command prompt, create a new Texas project:
     
 where “myapp” is the application name.
 
-Change directory to myapp and start the web server:
+Change directory to myapp and run texas:
 
     $ cd test_project
     $ texas
