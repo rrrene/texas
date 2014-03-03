@@ -10,3 +10,4 @@ before_install:
     Pin-Priority: -1" > /etc/apt/preferences.d/ignore-doc-packages'
   - sudo apt-get -qq update
   - sudo apt-get install texlive-binaries texlive-latex-base pandoc texlive-latex-extra
+  - gem install bundler
