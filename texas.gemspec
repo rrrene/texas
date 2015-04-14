@@ -18,6 +18,5 @@ Gem::Specification.new do |s|
   s.executables  << 'texas'
 
   s.add_runtime_dependency 'term-ansicolor'
-  s.add_runtime_dependency 'listen'
-  s.add_runtime_dependency 'rb-inotify', '~> 0.9'
+  s.add_runtime_dependency 'listen', '~> 2.0'
 end

@@ -10,9 +10,11 @@ module Texas
       def run
         self.class.run_options = options.to_h.merge(:task => :build)
         dirs = Task::Watch.directories_to_watch
-        Listen.to(*dirs) do |modified, added, removed|
+        listener = Listen.to(*dirs) do |modified, added, removed|
           Task::Watch.rebuild
         end
+        listener.start
+        sleep
       end
 
       class << self
@@ -28,7 +30,7 @@ module Texas
         #
         # Example:
         #   Texas::Task::Watch.directories << "images/"
-        #   
+        #
         def directories
           @@directories ||= default_directories
         end
@@ -43,7 +45,7 @@ module Texas
           finished_at = Time.now.to_i
           time = finished_at - started_at
           trace TraceInfo.new(:rebuild, "in #{time} seconds", :green)
-        end 
+        end
       end
     end
   end

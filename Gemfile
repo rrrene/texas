@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
+# Specify your gem's dependencies in inch.gemspec
+gemspec
+
 gem 'rake'
-gem 'listen'
-gem 'rb-inotify', '~> 0.8.8'
-gem 'term-ansicolor'
 gem 'rspec'
