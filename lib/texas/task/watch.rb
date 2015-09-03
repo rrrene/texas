@@ -13,6 +13,7 @@ module Texas
         listener = Listen.to(*dirs) do |modified, added, removed|
           Task::Watch.rebuild
         end
+        Task::Watch.rebuild
         listener.start
         sleep
       end
