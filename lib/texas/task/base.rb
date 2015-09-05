@@ -1,7 +1,7 @@
 module Texas
   module Task
     class Base
-      include Texas::OutputHelper
+      include Texas::CLI::OutputHelper
       attr_accessor :options
 
       def initialize(_options, _build = nil)

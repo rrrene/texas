@@ -1,7 +1,7 @@
 module Texas
   module Build
     class << self
-      include Texas::OutputHelper
+      include Texas::CLI::OutputHelper
 
       # Display the error message that caused the exception.
       #

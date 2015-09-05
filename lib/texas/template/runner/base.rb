@@ -6,7 +6,7 @@ module Texas
   # Runs and renders a template.
   #
   class Template::Runner::Base
-    include Texas::OutputHelper
+    include Texas::CLI::OutputHelper
     include Texas::Template::Helper::Base
     include Texas::Template::Helper::Info
 
@@ -37,11 +37,11 @@ module Texas
     def __path__
       File.dirname filename
     end
-    
+
     # Shorthand to the build's config's document object.
     # Can be used inside templates to display config information.
     #
-    # Example: 
+    # Example:
     #   <%= document.title %>
     #
     def document

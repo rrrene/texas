@@ -19,7 +19,7 @@ module Texas
       end
 
       class << self
-        include Texas::OutputHelper
+        include Texas::CLI::OutputHelper
 
         # Returns the directories watched by default.
         #
@@ -42,7 +42,7 @@ module Texas
 
         def rebuild
           started_at = Time.now.to_i
-          Texas::Runner.new(run_options)
+          Texas::CLI::Runner.new(run_options)
           finished_at = Time.now.to_i
           time = finished_at - started_at
           trace TraceInfo.new(:rebuild, "in #{time} seconds", :green)

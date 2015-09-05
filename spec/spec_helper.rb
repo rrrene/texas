@@ -47,7 +47,7 @@ end
 def run_scenario(scenario, options = {}, &block)
   options = default_options.merge(options) if options.is_a?(Hash)
   work_dir = use_scenario(scenario)
-  runner = Texas::Runner.new(options)
+  runner = Texas::CLI::Runner.new(options)
   if block_given?
     yield runner
   else

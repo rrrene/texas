@@ -19,6 +19,7 @@ module Texas
         def h2(*args); tex(:subsection, *args); end
         def h3(*args); tex(:subsubsection, *args); end
         def h4(text); '\paragraph{'+text+'} ~\\'; end
+        def h5(text); bold(text); end
 
         def italic(text)
           tex :emph, text
@@ -39,7 +40,7 @@ module Texas
           "\\\\"
         end
         alias br linebreak
-        
+
         def quote(string)
           "\"`#{string}\"'"
         end

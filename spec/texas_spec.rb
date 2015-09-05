@@ -5,7 +5,7 @@ def pandoc_present?
   !where.empty?
 end
 
-describe Texas::Runner do
+describe Texas::CLI::Runner do
   describe "#initialize" do
 
     it "run basic tex scenario" do

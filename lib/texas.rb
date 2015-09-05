@@ -19,11 +19,11 @@ Texas.contents_subdir_name = "contents"
 
 require 'pp'
 
-require_relative 'texas/output_helper'
-require_relative 'texas/option_parser'
+require_relative 'texas/cli/output_helper'
+require_relative 'texas/cli/option_parser'
+require_relative 'texas/cli/runner'
 require_relative 'texas/build'
 require_relative 'texas/core_ext'
 require_relative 'texas/task'
 require_relative 'texas/template'
 require_relative 'texas/version'
-require_relative 'texas/runner'

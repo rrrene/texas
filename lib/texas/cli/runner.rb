@@ -52,7 +52,7 @@ module Texas
       end
 
       def run
-        Build.run_with_nice_errors(@task_instance) { exit 1 }
+        Texas::Build.run_with_nice_errors(@task_instance) { exit 1 }
       end
 
       # Returns the class for the given task.
