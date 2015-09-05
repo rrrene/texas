@@ -42,10 +42,11 @@ module Texas
 
         def rebuild
           started_at = Time.now.to_i
-          Texas::CLI::Runner.new(run_options)
+          build = Texas::CLI::Runner.new(run_options).task_instance
           finished_at = Time.now.to_i
           time = finished_at - started_at
           trace TraceInfo.new(:rebuild, "in #{time} seconds", :green)
+          build
         end
       end
     end
